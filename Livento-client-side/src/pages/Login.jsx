@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { use, useState } from 'react';
 import { motion } from 'framer-motion';
 import Swal from 'sweetalert2';
 import homebg from '../assets/home-bg.jpg';
@@ -6,12 +6,19 @@ import { FcGoogle } from 'react-icons/fc';
 import { FaFacebook } from 'react-icons/fa';
 import openeye from '../assets/blackOpen.png';
 import hideneye from '../assets/blackHide.png';
-import { Link } from 'react-router';
+import { Link, Navigate, useLocation, useNavigate } from 'react-router';
+import { AuthContext } from '../context/AuthContext';
+
 
 const Login = () => {
   const [eyeOpen, setEyeOpen] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const { signInUser, signInWithGoogle } = use(AuthContext);
+  const location = useLocation();
+  const navigate = useNavigate();
+  console.log(location);
 
   // Password validation conditions
   const hasUppercase = /[A-Z]/.test(password);
@@ -31,7 +38,35 @@ const Login = () => {
     }
 
     // Proceed with login logic
-    console.log("Email:", email, "Password:", password);
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+
+    console.log(email, password);
+    signInUser(email, password)
+      .then((result) => {
+        console.log(result.user);
+        e.target.reset();
+        navigate(location.state || "/");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+
+  };
+
+
+  // google sign in
+
+  const handleGoogleSignIn = () => {
+    signInWithGoogle()
+      .then((result) => {
+        console.log(result.user);
+       navigate(location?.state || "/");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
@@ -126,10 +161,12 @@ const Login = () => {
 
         {/* Social Login */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <button className="flex-1 btn btn-primary bg-white text-black hover:scale-110 transition duration-300">
+          <button
+          onClick={handleGoogleSignIn}
+          className="btn btn-primary border-none shadow-black hover:scale-110 transition ease-in-out duration-300 bg-white text-black flex items-center justify-center gap-2">
             <FcGoogle size={24} /> Sign in with Google
           </button>
-          <button className="flex-1 btn btn-primary hover:scale-110 transition duration-300">
+          <button className="btn btn-primary border-none shadow-black hover:scale-110 transition ease-in-out duration-300 text-white flex items-center justify-center gap-2">
             <FaFacebook size={24} /> Sign in with Facebook
           </button>
         </div>

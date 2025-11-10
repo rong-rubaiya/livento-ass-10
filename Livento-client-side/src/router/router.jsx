@@ -6,7 +6,7 @@ import MyProperties from "../pages/MyProperties";
 import MyRatings from "../pages/MyRatings";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
-
+import PrivateRoute from "./PrivateRoute";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -14,19 +14,32 @@ export const router = createBrowserRouter([
     children:[
       {
         path:'/properties',
-        element:<Properties/>
+        element: 
+          
+            <Properties/>
+         
       },
       {
         path:'/add-property',
-        element:<AddProperties/>
+        element:
+        (<PrivateRoute>
+          <AddProperties/>
+        </PrivateRoute>)
       },
       {
         path:'/my-properties',
-        element:<MyProperties/>
+        element:
+        (<PrivateRoute>
+        <MyProperties/>
+        </PrivateRoute>)
       },
       {
         path:'/my-ratings',
-        element:<MyRatings/>
+        element:
+         (<PrivateRoute>
+        <MyRatings/>
+        </PrivateRoute>)
+        
       },
       {
         path:'/login',

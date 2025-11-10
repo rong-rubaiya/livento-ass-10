@@ -1,56 +1,98 @@
-import React, { useState } from 'react';
+import React, { use,  useState } from 'react';
 import { motion } from 'framer-motion';
 import homebg from '../assets/home-bg.jpg';
 import { FcGoogle } from 'react-icons/fc';
 import { FaFacebook } from 'react-icons/fa';
 import openeye from '../assets/blackOpen.png';
 import hideneye from '../assets/blackHide.png';
-import { Link, useNavigate } from 'react-router'; // Use react-router-dom for navigation
+import { Link, useNavigate } from 'react-router'; // ✅ use react-router-dom instead of react-router
 import Swal from 'sweetalert2';
+import { AuthContext } from '../context/AuthContext';
 
 const Register = () => {
+  const { createUser, updateUserProfile, signInWithGoogle } = use(AuthContext); // ✅ useContext instead of use
   const [eyeOpen, setEyeOpen] = useState(false);
   const [confirmEyeOpen, setConfirmEyeOpen] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const navigate = useNavigate(); // Hook to navigate
+  const navigate = useNavigate();
 
-  // password conditions
-
- const hasUppercase = /[A-Z]/.test(password);
+  // Password conditions
+  const hasUppercase = /[A-Z]/.test(password);
   const hasLowercase = /[a-z]/.test(password);
   const hasLength = password.length >= 6;
 
+  // Form submit
   const handleSubmit = (e) => {
     e.preventDefault();
 
-     if (!hasUppercase || !hasLowercase || !hasLength) {
-   Swal.fire({
-  icon: "error",
-  title: "Oops...",
-  text: "⚠ Please meet all password conditions before signing up!",
-  
-});
+    // ✅ Check password conditions first (before createUser)
+    if (!hasUppercase || !hasLowercase || !hasLength) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "⚠ Please meet all password conditions before signing up!",
+      });
       return;
-    
     }
 
     if (password !== confirmPassword) {
       Swal.fire({
-  icon: "error",
-  title: "Oops...",
-  text: "❗ Confirm password doesn’t match.",
-  
-  
-});
-return
+        icon: "error",
+        title: "Oops...",
+        text: "❗ Confirm password doesn’t match.",
+      });
+      return;
     }
 
-    console.log('Email:', email, 'Password:', password);
-    
-    // After registration, navigate to home page
-    navigate('/'); // You can replace '/' with any desired route
+    const photoURL = e.target.photoURL.value;
+
+    // ✅ Firebase createUser
+    createUser(email, password)
+      .then((result) => {
+        console.log(result.user);
+        Swal.fire({
+          title: "User created successfully!",
+          icon: "success",
+        });
+
+        // ✅ Optional: update profile
+        updateUserProfile({
+          photoURL: photoURL,
+        });
+
+        navigate('/');
+      })
+      .catch((error) => {
+        console.log(error);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: error.message,
+        });
+      });
+  };
+
+  // ✅ Google Sign In
+  const handleGoogleSignIn = () => {
+    signInWithGoogle()
+      .then((result) => {
+        Swal.fire({
+          title: "Logged in successfully!",
+          icon: "success",
+        });
+        console.log(result.user);
+        navigate("/");
+      })
+      .catch((error) => {
+        console.log(error);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: error.message,
+        });
+      });
   };
 
   return (
@@ -80,23 +122,31 @@ return
           <div className="relative">
             <input
               type="email"
+              name="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
               className="peer w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#EC6325] focus:border-[#EC6325] placeholder:text-gray-400 text-gray-800"
               placeholder="Email Address"
             />
-            <label className="absolute left-4 top-3 text-gray-400 text-sm transition-all
-              peer-placeholder-shown:top-3 peer-placeholder-shown:text-gray-400 peer-placeholder-shown:text-base
-              peer-focus:top-1 peer-focus:text-[#EC6325] peer-focus:text-sm">
-             
-            </label>
+          </div>
+
+          {/* Photo URL */}
+          <div className="relative">
+            <input
+              type="url"
+              name="photoURL"
+              required
+              className="peer w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#EC6325] focus:border-[#EC6325] placeholder:text-gray-400 text-gray-800"
+              placeholder="Photo URL"
+            />
           </div>
 
           {/* Password */}
           <div className="relative">
             <input
               type={eyeOpen ? 'text' : 'password'}
+              name="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
@@ -107,13 +157,8 @@ return
               onClick={() => setEyeOpen(!eyeOpen)}
               className="h-6 w-6 right-3 top-3 absolute cursor-pointer"
               src={!eyeOpen ? hideneye : openeye}
-              alt=""
+              alt="Toggle visibility"
             />
-            <label className="absolute left-4 top-3 text-gray-400 text-sm transition-all
-              peer-placeholder-shown:top-3 peer-placeholder-shown:text-gray-400 peer-placeholder-shown:text-base
-              peer-focus:top-1 peer-focus:text-[#EC6325] peer-focus:text-sm">
-              
-            </label>
           </div>
 
           {/* Confirm Password */}
@@ -130,29 +175,25 @@ return
               onClick={() => setConfirmEyeOpen(!confirmEyeOpen)}
               className="h-6 w-6 right-3 top-3 absolute cursor-pointer"
               src={!confirmEyeOpen ? hideneye : openeye}
-              alt=""
+              alt="Toggle visibility"
             />
-            <label className="absolute left-4 top-3 text-gray-400 text-sm transition-all
-              peer-placeholder-shown:top-3 peer-placeholder-shown:text-gray-400 peer-placeholder-shown:text-base
-              peer-focus:top-1 peer-focus:text-[#EC6325] peer-focus:text-sm">
-           
-            </label>
           </div>
 
+          {/* Password validation */}
           {password && (
-                <div className="text-sm mt-1 space-y-1 text-gray-700">
-                  <p>Password characters: <strong>{password.length}</strong></p>
-                  <p className={`${hasUppercase ? "text-green-600" : "text-red-500"}`}>
-                    {hasUppercase ? "✔" : "✖"} Must contain an Uppercase letter
-                  </p>
-                  <p className={`${hasLowercase ? "text-green-600" : "text-red-500"}`}>
-                    {hasLowercase ? "✔" : "✖"} Must contain a Lowercase letter
-                  </p>
-                  <p className={`${hasLength ? "text-green-600" : "text-red-500"}`}>
-                    {hasLength ? "✔" : "✖"} Must be at least 6 characters long
-                  </p>
-                </div>
-              )}
+            <div className="text-sm mt-1 space-y-1 text-gray-700">
+              <p>Password characters: <strong>{password.length}</strong></p>
+              <p className={`${hasUppercase ? "text-green-600" : "text-red-500"}`}>
+                {hasUppercase ? "✔" : "✖"} Must contain an Uppercase letter
+              </p>
+              <p className={`${hasLowercase ? "text-green-600" : "text-red-500"}`}>
+                {hasLowercase ? "✔" : "✖"} Must contain a Lowercase letter
+              </p>
+              <p className={`${hasLength ? "text-green-600" : "text-red-500"}`}>
+                {hasLength ? "✔" : "✖"} Must be at least 6 characters long
+              </p>
+            </div>
+          )}
 
           {/* Submit Button */}
           <button
@@ -182,11 +223,14 @@ return
 
         {/* Social Login */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <button className="btn btn-primary border-none shadow-black hover:scale-110 transition ease-in-out duration-300 bg-white text-black flex items-center justify-center gap-2">
+          <button
+            onClick={handleGoogleSignIn}
+            className="border border-gray-300 hover:scale-110 transition ease-in-out duration-300 bg-white text-black flex items-center justify-center gap-2 rounded-lg py-2"
+          >
             <FcGoogle size={24} /> Sign in with Google
           </button>
 
-          <button className="btn btn-primary hover:scale-110 transition ease-in-out duration-300 flex items-center justify-center gap-2">
+          <button className="hover:scale-110 transition ease-in-out duration-300 flex items-center justify-center gap-2 bg-[#1877F2] text-white rounded-lg py-2">
             <FaFacebook size={24} /> Sign in with Facebook
           </button>
         </div>

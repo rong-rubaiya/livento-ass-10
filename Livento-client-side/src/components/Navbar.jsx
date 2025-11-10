@@ -1,17 +1,23 @@
-import React from 'react';
+import React, { use } from 'react';
 import { Link, NavLink } from 'react-router';
 import logo from '../assets/liventologo.png';
 import { motion } from 'framer-motion';
 import './common.css'; 
+import { AuthContext } from '../context/AuthContext';
+import { FaUser } from 'react-icons/fa';
+import { FaGear } from 'react-icons/fa6';
+import { IoLogOut } from 'react-icons/io5';
 
 
 const Navbar = () => {
+
+  const {user,signOutUser}=use(AuthContext)
   return (
     <motion.div className="navbar shadow-sm border-b-2 bg-[#0D263C] text-white"
      initial={{ y: -50, opacity: 0 }} 
     animate={{ y: 0, opacity: 1 }} 
     transition={{ duration: 1.5 }}>
-      <div className="w-full md:w-11/12 mx-auto flex items-center justify-between">
+      <div className="w-full md:w-11/12 mx-auto flex :flex-row items-center justify-between">
         {/* Logo */}
         <div className="">
           <NavLink  to="/">
@@ -35,12 +41,63 @@ const Navbar = () => {
 
 
         {/*button */}
-        <div className="hidden lg:flex gap-2 items-center">
-         
-          <div className="dropdown dropdown-end">
+       
+ {user ? (
+          <div className="dropdown dropdown-end z-50 text-black ml-[40%] sm:ml-0">
+            <div
+              tabIndex={0}
+              role="button"
+              className="btn btn-ghost btn-circle avatar"
+            >
+              <div className="w-12 border-2 border-gray-300 rounded-full">
+                <img
+                  alt="Tailwind CSS Navbar component"
+                  referrerPolicy="no-referrer"
+                  src={user.photoURL || "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"}
+                />
+              </div>
+            </div>
+            <ul
+              tabIndex="1"
+              className="menu  menu-sm dropdown-content bg-base-100 rounded-box z-50 mt-3 w-44 sm:w-52 p-2 shadow"
+            >
+              <div className=" pb-3 border-b border-b-gray-200">
+                <li className="text-sm font-bold">{user.displayName}</li>
+                <li className="text-xs">{user.email}</li>
+              </div>
+              <li className="mt-3">
+                <Link to={"/profile"}>
+                  <FaUser /> Profile
+                </Link>
+              </li>
+              <li>
+                <a>
+                  {" "}
+                  <FaGear /> Settings
+                </a>
+              </li>
+              <li>
+                {/* LogOut btn */}
+                <button
+                onClick={signOutUser}
+                  
+                  className="btn btn-xs text-left bg-[#EC6325] text-white"
+                >
+                  <IoLogOut/> Logout
+                </button>
+              </li>
+            </ul>
+          </div>
+        ) : (
+           <div className="dropdown dropdown-end">
             <NavLink to="/login">
+             <button className="border-1 bg-black rounded-2xl px-2 py-2 block sm:hidden">
+
+              <span className="text-[#EC6325] text-sm">Login / Signup</span>
+            </button>
              
-             <button className="slice">
+             <button className="slice hidden sm:block">
+
               <span className="text">Login / Signup</span>
             </button>
 
@@ -48,29 +105,9 @@ const Navbar = () => {
 
 
 
-            {/* <div tabIndex={0} className="btn btn-ghost btn-circle avatar">
-              <div className="w-10 rounded-full">
-                <img
-                  src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-                  alt="User Avatar"
-                />
-              </div>
-            </div> */}
-            {/* <ul
-              tabIndex={-1}
-              className="menu menu-sm dropdown-content bg-base-100 rounded-box mt-3 w-52 p-2 shadow"
-            >
-              <li>
-                <a className="justify-between">
-                  Profile
-                  <span className="badge">New</span>
-                </a>
-              </li>
-              <li><a>Settings</a></li>
-              <li><a>Logout</a></li>
-            </ul> */}
+            
           </div>
-        </div>
+        )}
 
         {/* Mobile Menu */}
         <div className="lg:hidden dropdown">

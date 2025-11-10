@@ -61,3 +61,75 @@ const Footer = () => {
 };
 
 export default Footer;
+
+
+
+
+
+
+
+
+
+
+
+
+
+//  {user ? (
+//           <div className="dropdown dropdown-end z-50 text-black">
+//             <div
+//               tabIndex={0}
+//               role="button"
+//               className="btn btn-ghost btn-circle avatar"
+//             >
+//               <div className="w-9 border-2 border-gray-300 rounded-full">
+//                 <img
+//                   alt="Tailwind CSS Navbar component"
+//                   referrerPolicy="no-referrer"
+//                   src={user.photoURL || "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"}
+//                 />
+//               </div>
+//             </div>
+//             <ul
+//               tabIndex="-1"
+//               className="menu  menu-sm dropdown-content bg-base-100 rounded-box z-50 mt-3 w-52 p-2 shadow"
+//             >
+//               <div className=" pb-3 border-b border-b-gray-200">
+//                 <li className="text-sm font-bold">{user.displayName}</li>
+//                 <li className="text-xs">{user.email}</li>
+//               </div>
+//               <li className="mt-3">
+//                 <Link to={"/profile"}>
+//                   <FaUser /> Profile
+//                 </Link>
+//               </li>
+//               <li>
+//                 <a>
+//                   {" "}
+//                   <FaGear /> Settings
+//                 </a>
+//               </li>
+//               <li>
+//                 <button
+                  
+//                   className="btn btn-xs text-left bg-linear-to-r from-pink-500 to-red-500 text-white"
+//                 >
+//                    Logout
+//                 </button>
+//               </li>
+//             </ul>
+//           </div>
+//         ) : (
+//            <div className="dropdown dropdown-end">
+//             <NavLink to="/login">
+             
+//              <button className="slice">
+//               <span className="text">Login / Signup</span>
+//             </button>
+
+//             </NavLink>
+
+
+
+            
+//           </div>
+//         )}
