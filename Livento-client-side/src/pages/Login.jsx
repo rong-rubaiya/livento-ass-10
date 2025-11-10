@@ -1,11 +1,11 @@
 import React from 'react';
 
-const navber = () => {
+const Login = () => {
   return (
     <div>
-      
+      login
     </div>
   );
 };
 
-export default navber;
+export default Login;

@@ -1,2 +1,17 @@
 @import "tailwindcss";
 @plugin "daisyui";
+
+/* Animate active link */
+a.active {
+  color: #EC6325;               /* active color */
+  text-decoration: underline;   /* underline */
+  transition: all 0.3s ease; 
+  font-size: 20px;   /* smooth transition */
+}
+
+/* Optional: animate hover too */
+a:hover {
+  color: #EC6325;
+  text-decoration: underline;
+  transition: all 0.3s ease;
+}
