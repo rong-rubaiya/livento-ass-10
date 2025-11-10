@@ -5,6 +5,7 @@ import AddProperties from "../pages/AddProperties";
 import MyProperties from "../pages/MyProperties";
 import MyRatings from "../pages/MyRatings";
 import Login from "../pages/Login";
+import Register from "../pages/Register";
 
 export const router = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ export const router = createBrowserRouter([
       {
         path:'/login',
         element:<Login/>
+      },
+      {
+        path:'/register',
+        element:<Register/>
       }
     ]
   }])

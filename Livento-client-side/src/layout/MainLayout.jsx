@@ -9,8 +9,10 @@ const MainLayout = () => {
       <header className='w-full '>
         <Navbar/>
       </header>
-      <main className='w-11/12 mx-auto'>
-        <Outlet/>
+      <main className='w-full'>
+       
+          <Outlet/>
+        
       </main>
       <footer>
         <Footer/>
