@@ -83,7 +83,7 @@ const Register = () => {
           icon: "success",
         });
         console.log(result.user);
-        navigate("/");
+        navigate("/home");
       })
       .catch((error) => {
         console.log(error);

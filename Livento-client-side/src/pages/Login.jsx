@@ -45,8 +45,12 @@ const Login = () => {
     signInUser(email, password)
       .then((result) => {
         console.log(result.user);
+        Swal.fire({
+                  title: "User login successfully!",
+                  icon: "success",
+                });
         e.target.reset();
-        navigate(location.state || "/");
+        navigate(location.state || "/home");
       })
       .catch((error) => {
         console.log(error);
@@ -62,7 +66,7 @@ const Login = () => {
     signInWithGoogle()
       .then((result) => {
         console.log(result.user);
-       navigate(location?.state || "/");
+       navigate(location?.state || "/home");
       })
       .catch((error) => {
         console.log(error);
@@ -92,7 +96,8 @@ const Login = () => {
         <form onSubmit={handleSubmit} className="space-y-5">
           {/* Email */}
           <input
-            type="email"
+             type="email"
+            name="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
@@ -104,6 +109,7 @@ const Login = () => {
           <div className="relative">
             <input
               type={eyeOpen ? 'text' : 'password'}
+              name="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required

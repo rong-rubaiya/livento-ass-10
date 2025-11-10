@@ -7,11 +7,19 @@ import MyRatings from "../pages/MyRatings";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import PrivateRoute from "./PrivateRoute";
+import Home from "../pages/Home";
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout/>,
     children:[
+       {
+        path:'/home',
+        element: 
+          
+            <Home/>
+         
+      },
       {
         path:'/properties',
         element: 

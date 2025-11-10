@@ -21,7 +21,7 @@ const Footer = () => {
             Quick Links
           </h2>
           <ul className="space-y-2 text-sm flex flex-col">
-            <NavLink to="/" className="hover:text-[#EC6325] hover:scale-110 transition ease-in-out duration-30">Home</NavLink>
+            <NavLink to="/home" className="hover:text-[#EC6325] hover:scale-110 transition ease-in-out duration-30">Home</NavLink>
           <NavLink to="/properties" className="hover:text-[#EC6325] hover:scale-110 transition ease-in-out duration-30">All Properties</NavLink>
             
             
