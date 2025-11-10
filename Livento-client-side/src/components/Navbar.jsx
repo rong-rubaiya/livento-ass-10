@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router';
-import logo from '../assets/livento logo.png';
+import logo from '../assets/liventologo.png';
 import { motion } from 'framer-motion';
 import './common.css'; 
 
@@ -20,7 +20,7 @@ const Navbar = () => {
         </div>
 
         {/* Navigation Links */}
-        <motion.div className="hidden md:flex gap-9 items-center font-bold"
+        <motion.div className="hidden lg:flex gap-9 items-center font-bold"
         initial={{ x: -50, opacity: 0 }} 
     animate={{ x: 0, opacity: 1 }} 
     transition={{ duration: 1.5 }}>
@@ -34,8 +34,8 @@ const Navbar = () => {
 
 
 
-        {/* profile */}
-        <div className="flex gap-2 items-center">
+        {/*button */}
+        <div className="hidden lg:flex gap-2 items-center">
          
           <div className="dropdown dropdown-end">
             <NavLink to="/login">
@@ -47,7 +47,7 @@ const Navbar = () => {
             </NavLink>
 
 
-            
+
             {/* <div tabIndex={0} className="btn btn-ghost btn-circle avatar">
               <div className="w-10 rounded-full">
                 <img
@@ -73,7 +73,7 @@ const Navbar = () => {
         </div>
 
         {/* Mobile Menu */}
-        <div className="md:hidden dropdown">
+        <div className="lg:hidden dropdown">
           <label tabIndex={0} className="btn btn-ghost btn-circle">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 le" fill="none"
               viewBox="0 0 24 24" stroke="currentColor">
