@@ -8,6 +8,7 @@ import Login from "../pages/Login";
 import Register from "../pages/Register";
 import PrivateRoute from "./PrivateRoute";
 import Home from "../pages/Home";
+import SingleProp from "../pages/SingleProp";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -26,8 +27,17 @@ export const router = createBrowserRouter([
         path:'/properties',
         element: 
           
-            <Properties/>
+            <Properties/>,
+            loader:()=>fetch('http://localhost:5000/propertis')
          
+      },
+      {
+          path:'/single-property/:id',
+          element:(<PrivateRoute>
+            <SingleProp>
+            </SingleProp>
+          </PrivateRoute>),
+          loader: ({params}) => fetch(`http://localhost:5000/propertis/${params.id}`)
       },
       {
         path:'/add-property',
