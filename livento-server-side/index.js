@@ -48,7 +48,7 @@ async function run() {
       try {
         const result = await proCollection
           .find()
-          .sort({ createdAt: -1 }) 
+          .sort({ postedDate: -1 }) 
           .limit(6)
           .toArray();
         res.send(result);
@@ -56,6 +56,8 @@ async function run() {
         res.status(500).send({ message: err.message });
       }
     });
+
+    
 
     // get single data
 
@@ -65,6 +67,19 @@ async function run() {
   const result=await proCollection.findOne({_id: new ObjectId(id)})
   res.send({
     success:true,
+    result
+  })
+})
+
+// add property
+
+app.post('/propertis',async(req,res)=>{
+  // need to data pathano
+  const data =req.body
+  console.log(data);
+  const result=await proCollection.insertOne(data)
+  res.send({
+    success: true,
     result
   })
 })
