@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import { motion } from 'framer-motion';
 import Swal from 'sweetalert2';
 
@@ -12,7 +12,7 @@ const directions = [
 
 const RealState = () => {
   const [properties, SetProperties] = useState([]);
-  const navigate = useNavigate();
+ 
 
   useEffect(() => {
     fetch("http://localhost:5000/propertis/featured")
@@ -21,6 +21,7 @@ const RealState = () => {
       .catch((err) => console.error(err));
   }, []);
 
+  
   return (
     <motion.section
       initial={{ opacity: 0, y: -50, scale: 0.95 }}
@@ -58,12 +59,19 @@ const RealState = () => {
                 <p className="text-gray-600 text-sm mb-2 line-clamp-2">{item.description}</p>
                 <p className="text-gray-600 font-semibold text-sm mb-2">{item.location}</p>
                 <p className="text-[#EC6325] font-bold text-lg mb-4">${item.price.toLocaleString()}</p>
+                {/* btn */}
+
+                
                 <button
+                
                 
                   className="w-full bg-[#EC6325] hover:bg-[#d15c20] text-white font-semibold py-2 rounded-full transition duration-300 slice"
                 >
                   <span className='text'> View Details</span>
                 </button>
+                
+
+
               </div>
             </motion.div>
           );

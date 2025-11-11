@@ -19,8 +19,9 @@ export const router = createBrowserRouter([
         index:true,
         element: 
           
-            <Home/>,
-            loader:()=>fetch('http://localhost:5000/propertis')
+            <Home />,
+            loader:()=>fetch('http://localhost:5000/propertis'),
+            
          
       },
       {

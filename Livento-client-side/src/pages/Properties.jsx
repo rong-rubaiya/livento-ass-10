@@ -7,6 +7,8 @@ const Properties = () => {
   const properties = useLoaderData();
   console.log(properties);
 
+ 
+
   return (
     <div className="py-10 px-4 md:px-12 lg:px-20 bg-gray-100">
       <h2 className="text-3xl font-bold text-gray-800 mb-8 text-center">
