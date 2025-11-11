@@ -67,7 +67,7 @@ const Properties = () => {
 
               {/* btn details */}
 
-             <Link to={`/single-property/${properties._id}`}>
+             <Link to={`/single-property/${property._id}`}>
               <button className="btn w-full slice">
                 <span className="text">More Details</span>
               </button>
