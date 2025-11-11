@@ -1,5 +1,5 @@
 const express = require('express')
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const cors = require('cors')
 require('dotenv').config()
 
@@ -41,6 +41,33 @@ async function run() {
         // console.log(result);
         res.send(result)
       })
+
+      // sort:
+
+       app.get('/propertis/featured', async (req, res) => {
+      try {
+        const result = await proCollection
+          .find()
+          .sort({ createdAt: -1 }) 
+          .limit(6)
+          .toArray();
+        res.send(result);
+      } catch (err) {
+        res.status(500).send({ message: err.message });
+      }
+    });
+
+    // get single data
+
+    app.get('/propertis/:id',async(req,res)=>{
+  const {id} =req.params
+  console.log(id);
+  const result=await proCollection.findOne({_id: new ObjectId(id)})
+  res.send({
+    success:true,
+    result
+  })
+})
     
     await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
@@ -53,7 +80,7 @@ run().catch(console.dir);
 
 
 app.get('/', (req, res) => {
-  res.send('Hello World!')
+  res.send('Server is running')
 })
 
 app.listen(port, () => {
