@@ -48,7 +48,7 @@ const Register = () => {
 
     const photoURL = e.target.photoURL.value;
 
-    // ✅ Firebase createUser
+    //  Firebase createUser
     createUser(email, password)
       .then((result) => {
         console.log(result.user);
