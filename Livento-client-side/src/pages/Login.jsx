@@ -50,7 +50,7 @@ const Login = () => {
                   icon: "success",
                 });
         e.target.reset();
-        navigate(location.state || "/home");
+        navigate(location.state || "/");
       })
       .catch((error) => {
         console.log(error);
@@ -80,7 +80,7 @@ const Login = () => {
         className="absolute inset-0 bg-cover bg-center"
         style={{ backgroundImage: `url(${homebg})` }}
       />
-      <div className="absolute inset-0 bg-black/60" />
+      <div className="absolute inset-0 bg-[#0E243B]/90" />
 
       {/* Login Card */}
       <motion.div
@@ -102,7 +102,7 @@ const Login = () => {
             onChange={(e) => setEmail(e.target.value)}
             required
             placeholder="Email Address"
-            className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#EC6325] focus:border-[#EC6325] placeholder-gray-400"
+            className="w-full p-3  focus:bg-white rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#EC6325] focus:border-[#EC6325] placeholder-gray-400  text-black"
           />
 
           {/* Password */}
@@ -114,7 +114,7 @@ const Login = () => {
               onChange={(e) => setPassword(e.target.value)}
               required
               placeholder="Password"
-              className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#EC6325] focus:border-[#EC6325] placeholder-gray-400"
+              className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#EC6325] focus:border-[#EC6325] text-black placeholder-gray-400"
             />
             <img
               onClick={() => setEyeOpen(!eyeOpen)}
@@ -126,7 +126,7 @@ const Login = () => {
 
           {/* Password Conditions */}
           {password && (
-            <div className="text-sm mt-1 space-y-1">
+            <div className="text-sm mt-1   text-black space-y-1">
               <p>Password characters: <strong>{password.length}</strong></p>
               <p className={hasUppercase ? "text-green-600" : "text-red-500"}>
                 {hasUppercase ? "✔" : "✖"} Must contain an Uppercase letter
@@ -151,7 +151,7 @@ const Login = () => {
 
         
         {/* Register Link */}
-        <p className="text-center py-4 hidden sm:block">
+        <p className="text-center  text-black py-4 hidden sm:block">
           New here?{' '}
           <Link to="/register" className="text-[#EC6325] italic font-semibold underline">
             Create an account

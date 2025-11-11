@@ -15,3 +15,21 @@ a:hover {
   text-decoration: underline;
   transition: all 0.3s ease;
 }
+
+
+/* Swiper pagination fix */
+.swiper-pagination {
+  bottom: 10px !important; /* adjust position */
+  z-index: 50 !important; /* above overlays */
+}
+
+.swiper-pagination-bullet {
+  width: 10px !important;
+  height: 10px !important;
+  background: #EC6325 !important; /* bullet color */
+  opacity: 1 !important;
+}
+
+.swiper-pagination-bullet-active {
+  background: #FFD580 !important; /* active bullet color */
+}

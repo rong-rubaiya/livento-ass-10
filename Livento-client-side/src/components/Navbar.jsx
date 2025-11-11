@@ -30,7 +30,7 @@ const Navbar = () => {
         initial={{ x: -50, opacity: 0 }} 
     animate={{ x: 0, opacity: 1 }} 
     transition={{ duration: 1.5 }}>
-          <NavLink to="/home" className="hover:text-[#EC6325] hover:scale-110 transition ease-in-out duration-30">Home</NavLink>
+          <NavLink to="/" className="hover:text-[#EC6325] hover:scale-110 transition ease-in-out duration-30">Home</NavLink>
           <NavLink to="/properties" className="hover:text-[#EC6325] hover:scale-110 transition ease-in-out duration-30">All Properties</NavLink>
           <NavLink to="/add-property" className="hover:text-[#EC6325] hover:scale-110 transition ease-in-out duration-30">Add Properties</NavLink>
           <NavLink to="/my-properties" className="hover:text-[#EC6325] hover:scale-110 transition ease-in-out duration-30">My Properties</NavLink>

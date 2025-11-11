@@ -126,7 +126,7 @@ const Register = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="peer w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#EC6325] focus:border-[#EC6325] placeholder:text-gray-400 text-gray-800"
+              className="peer w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#EC6325] focus:border-[#EC6325] focus:bg-white placeholder:text-gray-400 text-gray-800"
               placeholder="Email Address"
             />
           </div>
@@ -137,7 +137,7 @@ const Register = () => {
               type="url"
               name="photoURL"
               required
-              className="peer w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#EC6325] focus:border-[#EC6325] placeholder:text-gray-400 text-gray-800"
+              className="peer w-full border  focus:bg-white border-gray-300 rounded-lg px-4 py-3 focus:outline-none  focus:ring-2 focus:ring-[#EC6325] focus:border-[#EC6325] placeholder:text-gray-400 text-gray-800"
               placeholder="Photo URL"
             />
           </div>
@@ -150,7 +150,7 @@ const Register = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="peer w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#EC6325] focus:border-[#EC6325] placeholder:text-gray-400 text-gray-800"
+              className="peer w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none  focus:ring-2 focus:ring-[#EC6325] focus:border-[#EC6325] placeholder:text-gray-400 text-gray-800"
               placeholder="Password"
             />
             <img
@@ -205,7 +205,7 @@ const Register = () => {
         </form>
 
         {/* Already have account */}
-        <p className="text-center py-4 hidden sm:block">
+        <p className="text-center  text-black py-4 hidden sm:block">
           Already have an account?{' '}
           <Link to="/login">
             <span className="text-[#EC6325] italic font-semibold underline">
