@@ -5,6 +5,8 @@ import RealState from '../components/homecompo/RealState';
 import FAQSection from '../components/homecompo/FAQSection';
 import ChoosUs from '../components/homecompo/ChoosUs';
 
+import Agent from '../components/homecompo/Agent';
+
 
 
 
@@ -16,8 +18,10 @@ const Home = () => {
     <div>
       <Slider data={data}></Slider>
       <RealState data={data}></RealState>
+      
       <FAQSection></FAQSection>
       <ChoosUs></ChoosUs>
+      <Agent></Agent>
      
       
     </div>

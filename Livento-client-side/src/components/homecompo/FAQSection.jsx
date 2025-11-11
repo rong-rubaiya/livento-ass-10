@@ -39,14 +39,14 @@ const FAQSection = () => {
     >
       {/* Floating Question Marks */}
       <motion.span
-        className="absolute top-10 text-blue-800 left-300 text-6xl   select-none"
+        className="absolute top-10 text-blue-800 left-300 text-6xl   select-none hidden lg:block"
         variants={floatingVariants}
         animate="animate"
       >
         ?
       </motion.span>
       <motion.span
-        className="absolute top-1/3 right-8 text-9xl text-red-800 select-none"
+        className="absolute top-1/3 right-8 text-9xl text-red-800 select-none hidden lg:block"
         variants={floatingVariants}
         animate="animate"
       >
@@ -54,14 +54,14 @@ const FAQSection = () => {
       </motion.span>
 
       <motion.span
-        className="absolute top-1/3 right-150 text-9xl text-green-800 select-none"
+        className="absolute top-1/3 right-150 text-9xl text-green-800 select-none hidden lg:block"
         variants={floatingVariants}
         animate="animate"
       >
         ?
       </motion.span>
       <motion.span
-        className="absolute bottom-20 left-1/2 text-6xl text-yellow-600  select-none"
+        className="absolute bottom-20 left-1/2 text-6xl text-yellow-600  select-none hidden lg:block"
         variants={floatingVariants}
         animate="animate"
       >
@@ -78,8 +78,8 @@ const FAQSection = () => {
         </p>
       </div>
 
-      {/* FAQ + Illustration */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center relative z-10">
+     
+      <div className=" flex sm:grid grid-cols-1 md:grid-cols-2 gap-12 items-center relative flex-col-reverse sm:flex-row  z-10">
         {/* FAQ Accordion */}
         <div className="space-y-4">
           {faqData.map((faq, index) => (
