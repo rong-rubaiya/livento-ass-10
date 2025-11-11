@@ -60,7 +60,7 @@ const Properties = () => {
 
               <div className="flex justify-between items-center mb-2">
                 <span className="font-semibold text-[#EC6325]">
-                  ${property.price.toLocaleString()}
+                  ${property.price}
                 </span>
                 <span className="badge badge-outline">{property.category}</span>
               </div>

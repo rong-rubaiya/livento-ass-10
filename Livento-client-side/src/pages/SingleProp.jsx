@@ -47,7 +47,7 @@ const SingleProp = () => {
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
           <h2 className="text-2xl font-bold text-[#EC6325]">{property.category}</h2>
           <span className="text-3xl font-extrabold text-[#EC6325]">
-            ${property.price.toLocaleString()}
+            ${property.price}
           </span>
         </div>
 

@@ -26,7 +26,9 @@ const Slider = ({ data }) => {
         navigation={true}
         className="w-full h-full"
       >
-        {data.map((item, index) => {
+        {data.
+        filter(item => item.ratings && item.ratings.length > 0)
+        .map((item, index) => {
           const rating = item.ratings[0]; // single review object
 
           return (
