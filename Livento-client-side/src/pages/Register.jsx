@@ -5,12 +5,12 @@ import { FcGoogle } from 'react-icons/fc';
 import { FaFacebook } from 'react-icons/fa';
 import openeye from '../assets/blackOpen.png';
 import hideneye from '../assets/blackHide.png';
-import { Link, useNavigate } from 'react-router'; // ✅ use react-router-dom instead of react-router
+import { Link, useNavigate } from 'react-router'; 
 import Swal from 'sweetalert2';
 import { AuthContext } from '../context/AuthContext';
 
 const Register = () => {
-  const { createUser, updateUserProfile, signInWithGoogle } = use(AuthContext); // ✅ useContext instead of use
+  const { createUser, updateUserProfile, signInWithGoogle } = use(AuthContext); // 
   const [eyeOpen, setEyeOpen] = useState(false);
   const [confirmEyeOpen, setConfirmEyeOpen] = useState(false);
   const [email, setEmail] = useState('');
@@ -57,7 +57,7 @@ const Register = () => {
           icon: "success",
         });
 
-        // ✅ Optional: update profile
+       
         updateUserProfile({
           photoURL: photoURL,
         });
@@ -74,7 +74,7 @@ const Register = () => {
       });
   };
 
-  // ✅ Google Sign In
+  //  Google Sign In
   const handleGoogleSignIn = () => {
     signInWithGoogle()
       .then((result) => {
