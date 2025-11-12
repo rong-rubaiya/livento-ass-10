@@ -85,7 +85,7 @@ const Login = () => {
         className="absolute inset-0 bg-cover bg-center"
         style={{ backgroundImage: `url(${homebg})` }}
       />
-      <div className="absolute inset-0 bg-[#0E243B]/90" />
+      <div className="absolute inset-0 bg-[#0E243B]/90 backdrop-blur-sm" />
 
       {/* Login Card */}
       <motion.div

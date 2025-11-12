@@ -56,6 +56,9 @@ const Properties = () => {
               <h3 className="text-xl text-[#EC6325] font-semibold mb-2">
                 {property.propertyName}
               </h3>
+              <h3 className="text-sm  font-semibold mb-2">
+                Posted by:{property.postedBy.name}
+              </h3>
               <p className="text-gray-600 text-sm mb-3">{property.description}</p>
 
               <div className="flex justify-between items-center mb-2">

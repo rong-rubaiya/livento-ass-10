@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react"
 import { motion } from "framer-motion"
 import { AuthContext } from "../context/AuthContext"
 import Swal from "sweetalert2"
-import { useNavigate, useLocation } from "react-router"
+import { useNavigate, useLocation, Link } from "react-router"
 import homebg from "../assets/add-home-bg.jpg"
 
 const AddProperties = () => {
@@ -38,47 +38,56 @@ const AddProperties = () => {
   }
 
   const handleSubmit = (e) => {
-    e.preventDefault()
+  e.preventDefault();
 
-    const formData = {
-      propertyName: propertyData.name,
-      image: propertyData.imgURL,
-      description: propertyData.description,
-      price: propertyData.price,
-      location: propertyData.location,
-      category: propertyData.category,
-      postedDate: new Date().toISOString().split("T")[0],
-      postedBy: {
-        name: user?.displayName || "Anonymous",
-        email: user?.email || "noemail@example.com",
-        profilePhoto: user?.photoURL || "",
-      },
-    }
+  const formData = {
+    propertyName: propertyData.name,
+    image: propertyData.imgURL,
+    description: propertyData.description,
+    price: propertyData.price,
+    location: propertyData.location,
+    category: propertyData.category,
+    postedDate: new Date().toISOString().split("T")[0],
+    postedBy: {
+      name: user?.displayName || "Anonymous",
+      email: user?.email || "noemail@example.com",
+      profilePhoto: user?.photoURL || "",
+    },
+  };
 
-    const url = editingProperty
-      ? `http://localhost:5000/propertis/${editingProperty.mainId || editingProperty._id}`
-      : "http://localhost:5000/propertis"
+  const url = editingProperty
+    ? `http://localhost:5000/propertis/${editingProperty.mainId || editingProperty._id}`
+    : "http://localhost:5000/propertis";
 
-    const method = editingProperty ? "PUT" : "POST"
+  const method = editingProperty ? "PUT" : "POST";
 
-    fetch(url, {
-      method,
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData),
+  fetch(url, {
+    method,
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(formData),
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      Swal.fire({
+        title: editingProperty ? "Property updated!" : "Property added!",
+        icon: "success",
+      }).then(() => {
+        if (editingProperty) {
+          // Navigate to single-property page after update
+          const propertyId = editingProperty._id || editingProperty.mainId;
+          navigate(`/single-property/${propertyId}`);
+        } else {
+          // Navigate to my-properties page after adding new property
+          navigate("/my-properties");
+        }
+      });
     })
-      .then((res) => res.json())
-      .then(() => {
-        Swal.fire({
-          title: editingProperty ? "Property updated!" : "Property added!",
-          icon: "success",
-        })
-        navigate("/my-properties")
-      })
-      .catch((err) => {
-        console.error(err)
-        Swal.fire({ title: "Error!", text: "Something went wrong", icon: "error" })
-      })
-  }
+    .catch((err) => {
+      console.error(err);
+      Swal.fire({ title: "Error!", text: "Something went wrong", icon: "error" });
+    });
+};
+
 
   return (
     <motion.div className="relative min-h-screen p-8">
@@ -156,8 +165,9 @@ const AddProperties = () => {
           </select>
 
           <button type="submit" className="slice w-full h-16 mt-4">
-            <span className="text">{editingProperty ? "Update Property" : "Add Property"}</span>
-          </button>
+              <span className="text">{editingProperty ? "Update Property" : "Add Property"}</span>
+         </button>
+          {/* {editingProperty ? "Update Property" : "Add Property"} */}
         </form>
       </div>
     </motion.div>

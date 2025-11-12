@@ -17,14 +17,18 @@ const MyProperties = () => {
       fetch(`http://localhost:5000/myproperties?email=${user.email}`)
         .then((res) => res.json())
         .then((data) => {
-          if (Array.isArray(data)) setProperties(data);
-          else setProperties([]);
+          if (Array.isArray(data)) {
+            // Normalize mainId
+            setProperties(data.map(p => ({ ...p, mainId: p.mainId || p._id })));
+          } else {
+            setProperties([]);
+          }
         })
         .catch((err) => console.error("Error fetching properties:", err));
     }
   }, [user]);
 
-  // Delete property
+  // 🔹 Delete property
   const handleDelete = (id, mainId) => {
     Swal.fire({
       title: "Are you sure?",
@@ -37,12 +41,8 @@ const MyProperties = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         Promise.all([
-          fetch(`http://localhost:5000/myproperties/${id}`, {
-            method: "DELETE",
-          }),
-          fetch(`http://localhost:5000/propertis/${mainId}`, {
-            method: "DELETE",
-          }),
+          fetch(`http://localhost:5000/myproperties/${id}`, { method: "DELETE" }),
+          fetch(`http://localhost:5000/propertis/${mainId}`, { method: "DELETE" }),
         ])
           .then(() => {
             setProperties(properties.filter((p) => p._id !== id));
@@ -63,27 +63,27 @@ const MyProperties = () => {
 
   return (
     <div className="relative min-h-screen py-10 px-4 md:px-10 overflow-hidden">
-      {/* 🔹 Background */}
+      {/* Background */}
       <div
         className="absolute inset-0 bg-cover bg-center"
         style={{ backgroundImage: `url(${bgphoto})` }}
       />
       <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
 
-      {/* 🔹 Header */}
+      {/* Header */}
       <div className="relative z-10 text-center mb-16">
         <h2 className="text-3xl md:text-4xl font-bold text-white mb-5">
-          My Properties
+          My Properties <span>({properties.length})</span>
         </h2>
         <p className="text-gray-200 text-lg">
           Manage and explore your listed properties beautifully.
         </p>
       </div>
 
-      {/* 🔹 Property Cards */}
+      {/* Property Cards */}
       <div className="relative z-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 justify-items-center">
         {properties.length === 0 ? (
-          <NoProperties/>
+          <NoProperties />
         ) : (
           properties.map((item) => (
             <motion.div
@@ -92,7 +92,7 @@ const MyProperties = () => {
               whileHover={{ y: -10 }}
               transition={{ type: "spring", stiffness: 100 }}
             >
-              {/* 🖼️ Image Section */}
+              {/* Image Section */}
               <div className="relative h-56 w-full overflow-hidden">
                 <motion.img
                   src={item.image}
@@ -110,7 +110,7 @@ const MyProperties = () => {
                 </div>
               </div>
 
-              {/* 🔹 Info Section */}
+              {/* Info Section */}
               <div className="p-5 bg-white flex flex-col gap-3 text-left h-full">
                 <p className="text-lg text-[#EC6325] font-semibold">
                   ${item.price}
@@ -120,9 +120,9 @@ const MyProperties = () => {
                   {item.description}
                 </p>
 
-                {/* 🔹 Action Buttons */}
+                {/* Action Buttons */}
                 <div className="flex gap-2 mt-4 flex-wrap">
-                  {/* ✏️ Update */}
+                  {/* Update */}
                   <motion.button
                     whileTap={{ scale: 0.9 }}
                     className="slice"
@@ -133,7 +133,7 @@ const MyProperties = () => {
                     <span className="text">Update</span>
                   </motion.button>
 
-                  {/* 🗑️ Delete */}
+                  {/* Delete */}
                   <motion.button
                     whileTap={{ scale: 0.9 }}
                     className="slice"
@@ -142,11 +142,13 @@ const MyProperties = () => {
                     <span className="text">Delete</span>
                   </motion.button>
 
-                  {/* 👁️ View */}
+                  {/* View */}
                   <motion.button
                     whileTap={{ scale: 0.9 }}
                     className="slice"
-                    onClick={() => navigate(`/property/${item.mainId}`)}
+                    onClick={() =>
+                      navigate(`/single-property/${item.mainId}`)
+                    }
                   >
                     <span className="text">View</span>
                   </motion.button>
@@ -155,21 +157,18 @@ const MyProperties = () => {
             </motion.div>
           ))
         )}
-
-        
       </div>
 
-      {/* 🔹 Add More */}
-      {properties.length === 0 ?
-      "":
-      <div className="flex justify-center mt-8">
-        <Link to="/add-property">
-          <button className="slice w-[600px]">
-            <span className="text">Add More</span>
-          </button>
-        </Link>
-      </div>}
-      
+      {/* Add More Button */}
+      {properties.length > 0 && (
+        <div className="flex justify-center mt-8">
+          <Link to="/add-property">
+            <button className="slice w-[600px]">
+              <span className="text">Add More</span>
+            </button>
+          </Link>
+        </div>
+      )}
     </div>
   );
 };
