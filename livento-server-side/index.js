@@ -30,13 +30,13 @@ async function run() {
     const userReviewsCollection = db.collection("userReviews");
 
 
-    // ✅ Get all properties
+    //  Get all properties
     app.get('/propertis', async (req, res) => {
       const result = await proCollection.find().toArray();
       res.send(result);
     });
 
-    // ✅ Featured (sort) route (DON’T delete this!)
+    //  Featured (sort) 
     app.get('/propertis/featured', async (req, res) => {
       try {
         const result = await proCollection
@@ -50,21 +50,20 @@ async function run() {
       }
     });
 
-    // ✅ Single property
+    // Single property
     app.get('/propertis/:id', async (req, res) => {
       const { id } = req.params;
       const result = await proCollection.findOne({ _id: new ObjectId(id) });
       res.send({ success: true, result });
     });
 
-    // ✅ Add new property
+    //  Add new property
     app.post('/propertis', async (req, res) => {
       const data = req.body;
       try {
-        // 1️⃣ Insert to main collection
+       
         const resultMain = await proCollection.insertOne(data);
 
-        // 2️⃣ Insert to my-properties (with mainId)
         const myData = {
           ...data,
           mainId: resultMain.insertedId
@@ -77,7 +76,7 @@ async function run() {
           myProperties: myData
         });
       } catch (err) {
-        res.status(500).send({ success: false, message: err.message });
+        res.send({ success: false, message: err.message });
       }
     });
 
@@ -85,18 +84,18 @@ async function run() {
     app.get('/myproperties', async (req, res) => {
       try {
         const email = req.query.email;
-        if (!email) return res.status(400).send({ error: "Email query missing" });
+        
 
         const result = await myproperCollection
           .find({ "postedBy.email": email })
           .toArray();
         res.send(result);
       } catch (err) {
-        res.status(500).send({ error: err.message });
+        res.send({ error: err.message });
       }
     });
 
-    // ✅ Update both collections
+    //Update both collections
     app.put('/propertis/:id', async (req, res) => {
       const { id } = req.params;
       const data = req.body;
@@ -123,7 +122,7 @@ async function run() {
       }
     });
 
-    // ✅ Delete from both collections
+    //  Delete from both collections
     app.delete('/propertis/:id', async (req, res) => {
       const { id } = req.params;
       const objectId = new ObjectId(id);
@@ -142,25 +141,25 @@ async function run() {
     // reviews
 
     app.post("/propertis/:id/reviews", async (req, res) => {
-  const { id } = req.params; // property _id
-  const reviewData = req.body; // { reviewerName, reviewerEmail, starRating, reviewText, reviewDate, ... }
+  const { id } = req.params; 
+  const reviewData = req.body; 
 
   try {
     const objectId = new ObjectId(id);
 
-    // 1️⃣ Add review to property's ratings array
+    
     await proCollection.updateOne(
       { _id: objectId },
       { $push: { ratings: reviewData } }
     );
 
-    // 2️⃣ Optionally, add review to userReviews collection
+   
     await userReviewsCollection.insertOne(reviewData);
 
     res.send({ success: true, message: "Review added successfully" });
   } catch (err) {
     console.error(err);
-    res.status(500).send({ success: false, message: err.message });
+    res.send({ success: false, message: err.message });
   }
 });
 
@@ -177,21 +176,21 @@ app.get("/userReviews", async (req, res) => {
 
     res.send(reviews);
   } catch (err) {
-    res.status(500).send({ error: err.message });
+    res.send({ error: err.message });
   }
 });
 
 
 // delete reviews
 
-// DELETE review (remove from both collections)
+
 app.delete('/reviews/:reviewId/:propertyId', async (req, res) => {
   const { reviewId, propertyId } = req.params;
   try {
-    // 1️⃣ Delete from userReviews
+ 
     await client.db('livento-db').collection('userReviews').deleteOne({ _id: new ObjectId(reviewId) });
 
-    // 2️⃣ Remove from property's ratings array
+  
     await client.db('livento-db').collection('liventos').updateOne(
       { _id: new ObjectId(propertyId) },
       { $pull: { ratings: { _id: new ObjectId(reviewId) } } }
@@ -199,7 +198,7 @@ app.delete('/reviews/:reviewId/:propertyId', async (req, res) => {
 
     res.send({ success: true, message: "Review deleted from both collections" });
   } catch (err) {
-    res.status(500).send({ success: false, message: err.message });
+    res.send({ success: false, message: err.message });
   }
 });
 
@@ -217,5 +216,5 @@ app.get('/', (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`🚀 Server listening on port ${port}`);
+  console.log(` Server listening on port ${port}`);
 });
