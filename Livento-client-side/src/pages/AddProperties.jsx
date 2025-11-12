@@ -1,47 +1,70 @@
-import React, { use } from 'react';
+import React, { use, useState } from 'react';
 import { motion } from 'framer-motion';
 import homebg from '../assets/add-home-bg.jpg'
 import { AuthContext } from '../context/AuthContext';
+import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router';
 
 const AddProperties = () => {
    const {user}=use(AuthContext)
    console.log(user);
+   
 
-   const handleSubmit=(e)=>{
-    e.preventDefault();
+   const navigate=useNavigate()
 
-    const formData = {
-       propertyName: e.target.name.value,
-  category: e.target.category.value,
-  description: e.target.description.value,
-  image: e.target.imgURL.value,
-  price: e.target.price.value,
-  location: e.target.location.value,
- postedDate: new Date().toISOString().split("T")[0],
- 
-  postedBy: {
-    name: user?.displayName || "Anonymous",
-    email: user?.email || "noemail@example.com",
-    profilePhoto: user?.photoURL || "https://randomuser.me/api/portraits/lego/1.jpg"
-  }
-      
+
+   const handleSubmit = (e) => {
+  e.preventDefault();
+
+  const formData = {
+    propertyName: e.target.name.value,
+    category: e.target.category.value,
+    description: e.target.description.value,
+    image: e.target.imgURL.value,
+    price: e.target.price.value,
+    location: e.target.location.value,
+    postedDate: new Date().toISOString().split("T")[0],
+    postedBy: {
+      name: user?.displayName || "Anonymous",
+      email: user?.email || "noemail@example.com",
+      profilePhoto: user?.photoURL || "https://randomuser.me/api/portraits/lego/1.jpg"
     }
+  };
 
-    fetch('http://localhost:5000/propertis', {
-     method:"POST",
-     headers:{
-      'Content-Type':'application/json'
-     },
-     body: JSON.stringify(formData)
-    })
-    .then(res=>res.json())
-    .then(data=>{
-      console.log(data);
-    })
-    .catch(err=>{
-      console.log(err);
-    })
-   }
+  // Insert into main collection
+  fetch('http://localhost:5000/propertis', {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(formData),
+  })
+  .then(res => res.json())
+  .then(() => {
+    // Insert into my-properties collection
+    return fetch('http://localhost:5000/myproperties', {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData) 
+    });
+  })
+  .then(res => res.json())
+  .then(data => {
+    console.log("Added to both collections:", data);
+    Swal.fire({
+      title: "Property added successfully!",
+      icon: "success",
+    });
+    navigate('/my-properties');
+  })
+  .catch(err => {
+    console.log(err);
+    Swal.fire({
+      title: "Error!",
+      text: "Something went wrong while adding property.",
+      icon: "error",
+    });
+  });
+};
+
 
   return  (
     <motion.div
@@ -50,13 +73,13 @@ const AddProperties = () => {
     >
        
       {/* Background Image with Opacity Overlay */}
-      <div className="absolute inset-0">
+      <div className="absolute inset-0 ">
         <img
           src={homebg}
           alt="Background"
           className="w-full h-full object-cover "
         />
-        <div className="absolute inset-0 bg-black/60 "></div> {/* opacity overlay */}
+        <div className="absolute inset-0 bg-black/60 backdrop-blur-sm"></div> {/* opacity overlay */}
       </div>
 
       {/* Form content */}
@@ -72,7 +95,7 @@ const AddProperties = () => {
             <label className="block mb-2 text-gray-800  font-semibold ">
               Property Name 
             </label>
-            <input
+            <input required
               type="text"
               name='name'
               placeholder="Enter property name"
@@ -83,7 +106,7 @@ const AddProperties = () => {
           {/* Image URL */}
           <div>
             <label className="block mb-2 text-gray-800  font-semibold">Image URL</label>
-            <input
+            <input required
               type="text"
               name='imgURL'
               placeholder="Enter image URL"
@@ -96,7 +119,7 @@ const AddProperties = () => {
             <label className="block mb-2 text-gray-800  font-semibold">
               Description
             </label>
-            <textarea
+            <textarea required
               placeholder="Enter property description"
               rows={4}
               name='description'
@@ -107,7 +130,7 @@ const AddProperties = () => {
           {/* Price */}
           <div>
             <label className="block mb-2 text-gray-800  font-semibold">Price ($)</label>
-            <input
+            <input required
               type="number"
               name='price'
               placeholder="Enter price"
@@ -118,7 +141,7 @@ const AddProperties = () => {
           {/* Location */}
           <div>
             <label className="block mb-2 text-gray-800  font-semibold">Location</label>
-            <input
+            <input required
               type="text"
               name='location'
               placeholder="Enter location"
@@ -129,7 +152,7 @@ const AddProperties = () => {
           {/* Category */}
           <div className=''>
             <label className="block mb-2 rounded-3xl text-gray-800  font-semibold ">Category</label>
-            <select
+            <select required
             name='category'
             className="w-full p-4   placeholder:text-gray-400  border-2 border-black focus:border-none focus:outline-none focus:ring-2 focus:ring-[#EC6325]  rounded-xl">
               <option className='text-gray-400'>Select Category</option>
@@ -138,6 +161,9 @@ const AddProperties = () => {
               <option className='text-gray-400'>House</option>
               <option className='text-gray-400'>Cottage</option>
               <option className='text-gray-400'>Studio</option>
+              <option className='text-gray-400'>Rent</option>
+              <option className='text-gray-400'>Sell</option>
+              <option className='text-gray-400'>Commercial</option>
             </select>
           </div>
 

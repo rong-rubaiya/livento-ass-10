@@ -80,7 +80,7 @@ const SingleProp = () => {
         />
         <div className="relative">
           <h3 className="text-lg font-semibold text-gray-800">
-            Posted by 
+            Posted by {' '}
             <br className="sm:hidden" />{property.postedBy.name}
           </h3>
           <p className="text-gray-500 text-sm  absolute -left-7 sm:-left-0">{property.postedBy.email}</p>

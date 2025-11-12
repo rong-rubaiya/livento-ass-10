@@ -50,10 +50,15 @@ const Login = () => {
                   icon: "success",
                 });
         e.target.reset();
-        navigate(location.state || "/");
+        navigate("/");
       })
       .catch((error) => {
         console.log(error);
+        Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: error.message,
+      });
       });
 
 

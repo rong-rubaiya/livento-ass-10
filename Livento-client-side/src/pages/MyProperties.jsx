@@ -1,9 +1,131 @@
-import React from 'react';
+import React, { useEffect, useState, useContext } from "react";
+import { motion } from "framer-motion";
+import { AuthContext } from "../context/AuthContext";
+import bgphoto from "../assets/my-proper-bg.jpg";
+import { Link } from "react-router";
 
 const MyProperties = () => {
+  const { user } = useContext(AuthContext);
+  const [properties, setProperties] = useState([]);
+
+  useEffect(() => {
+    if (user?.email) {
+      fetch(`http://localhost:5000/myproperties?email=${user.email}`)
+        .then((res) => res.json())
+        .then((data) => {
+          if (Array.isArray(data)) setProperties(data);
+          else if (data.result && Array.isArray(data.result)) setProperties(data.result);
+          else setProperties([]);
+        })
+        .catch((err) => {
+          console.error("Error fetching properties:", err);
+          setProperties([]);
+        });
+    }
+  }, [user]);
+
+  if (!user) {
+    return (
+      <p className="text-center mt-10 text-red-500">
+        Please login to see your properties.
+      </p>
+    );
+  }
+
   return (
-    <div>
-      my properties
+    <div className="relative min-h-screen py-10 px-4 md:px-10 overflow-hidden">
+      {/* Full background */}
+      <div
+        className="absolute inset-0 bg-cover bg-center"
+        style={{ backgroundImage: `url(${bgphoto})` }}
+      />
+      <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
+
+      {/* Content */}
+      <div className="relative z-10 text-center mb-16">
+        <h2 className="text-3xl md:text-4xl font-bold text-center text-white mb-5">
+          My Properties
+        </h2>
+        <p className="text-gray-200 text-lg">
+          Manage and explore your listed properties beautifully.
+        </p>
+      </div>
+
+      {/* Cards */}
+      <div className="relative z-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 justify-items-center">
+        {properties.length === 0 ? (
+          <p className="text-gray-200 text-xl col-span-full">
+            You have no properties listed yet.
+          </p>
+        ) : (
+          properties.map((item) => (
+            <motion.div
+              key={item._id}
+              className="group relative w-full max-w-sm  rounded-2xl overflow-hidden shadow-xl  transition-all duration-500 border h-auto"
+              whileHover={{ y: -10 }}
+              transition={{ type: "spring", stiffness: 100 }}
+            >
+              {/* Image Section */}
+              <div className="relative h-56 w-full overflow-hidden">
+                <motion.img
+                  src={item.image}
+                  alt={item.propertyName}
+                  className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                <div className="absolute bottom-3 left-4 text-white">
+                  <h3 className="text-2xl text-[#EC6325] font-bold">{item.propertyName}</h3>
+                  <p className="text-sm text-gray-300">
+                    {item.category} • {item.location}
+                  </p>
+                </div>
+              </div>
+
+              {/* Info Section */}
+              <div className="p-5 bg-white flex flex-col gap-3 text-left h-full">
+                <p className="text-lg  text-[#EC6325] font-semibold">
+                  ${item.price}
+                </p>
+                <p className="text-sm">
+                  Posted: {item.postedDate}
+                </p>
+                <p className=" line-clamp-3 text-gray-600 text-sm">
+                  {item.description}
+                </p>
+
+                {/* Buttons */}
+                <div className="flex gap-2 mt-4">
+                  <motion.button
+                    whileTap={{ scale: 0.9 }}
+                    className="slice"
+                  >
+                   <span className="text"> Update</span>
+                  </motion.button>
+                  <motion.button
+                    whileTap={{ scale: 0.9 }}
+                    className="slice"
+                  >
+                   <span className="text"> Delete</span>
+                  </motion.button>
+                  <motion.button
+                    whileTap={{ scale: 0.9 }}
+                    className="slice"
+                  >
+                   <span className="text"> View</span>
+                  </motion.button>
+                </div>
+              </div>
+            </motion.div>
+          ))
+        )}
+      </div>
+      <div className="flex justify-center mt-6  ">
+        <Link to='/add-property'>
+        <button className="slice w-[600px]">
+          <span className="text">Add More</span>
+        </button>
+        </Link>
+      </div>
     </div>
   );
 };

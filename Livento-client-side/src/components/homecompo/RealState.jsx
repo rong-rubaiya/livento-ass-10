@@ -56,6 +56,8 @@ const RealState = () => {
               <div className="p-4 bg-gray-200">
                 <h3 className="text-xl text-[#EC6325] font-semibold mb-1">{item.propertyName}</h3>
                 <p className="text-sm text-black font-bold mb-2">{item.category}</p>
+                <p className="text-sm text-gray-600  mb-2">{item.postedDate}</p>
+
                 <p className="text-gray-600 text-sm mb-2 line-clamp-2">{item.description}</p>
                 <p className="text-gray-600 font-semibold text-sm mb-2">{item.location}</p>
                 <p className="text-[#EC6325] font-bold text-lg mb-4">${item.price.toLocaleString()}</p>
