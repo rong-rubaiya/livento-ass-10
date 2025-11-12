@@ -22,10 +22,13 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     await client.connect();
+    // collecction
 
     const db = client.db('livento-db');
     const proCollection = db.collection('liventos');
     const myproperCollection = db.collection('myproperties');
+    const userReviewsCollection = db.collection("userReviews");
+
 
     // ✅ Get all properties
     app.get('/propertis', async (req, res) => {
@@ -133,6 +136,73 @@ async function run() {
         res.status(500).send({ success: false, message: err.message });
       }
     });
+
+
+
+    // reviews
+
+    app.post("/propertis/:id/reviews", async (req, res) => {
+  const { id } = req.params; // property _id
+  const reviewData = req.body; // { reviewerName, reviewerEmail, starRating, reviewText, reviewDate, ... }
+
+  try {
+    const objectId = new ObjectId(id);
+
+    // 1️⃣ Add review to property's ratings array
+    await proCollection.updateOne(
+      { _id: objectId },
+      { $push: { ratings: reviewData } }
+    );
+
+    // 2️⃣ Optionally, add review to userReviews collection
+    await userReviewsCollection.insertOne(reviewData);
+
+    res.send({ success: true, message: "Review added successfully" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ success: false, message: err.message });
+  }
+});
+
+// Get reviews of a specific user
+app.get("/userReviews", async (req, res) => {
+  try {
+    const email = req.query.email;
+    if (!email) return res.status(400).send({ error: "Email query missing" });
+
+    const reviews = await userReviewsCollection
+      .find({ reviewerEmail: email })
+      .sort({ reviewDate: -1 })
+      .toArray();
+
+    res.send(reviews);
+  } catch (err) {
+    res.status(500).send({ error: err.message });
+  }
+});
+
+
+// delete reviews
+
+// DELETE review (remove from both collections)
+app.delete('/reviews/:reviewId/:propertyId', async (req, res) => {
+  const { reviewId, propertyId } = req.params;
+  try {
+    // 1️⃣ Delete from userReviews
+    await client.db('livento-db').collection('userReviews').deleteOne({ _id: new ObjectId(reviewId) });
+
+    // 2️⃣ Remove from property's ratings array
+    await client.db('livento-db').collection('liventos').updateOne(
+      { _id: new ObjectId(propertyId) },
+      { $pull: { ratings: { _id: new ObjectId(reviewId) } } }
+    );
+
+    res.send({ success: true, message: "Review deleted from both collections" });
+  } catch (err) {
+    res.status(500).send({ success: false, message: err.message });
+  }
+});
+
 
     await client.db("admin").command({ ping: 1 });
     console.log("✅ MongoDB connected successfully!");
