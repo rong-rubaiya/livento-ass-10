@@ -11,7 +11,7 @@ const NoProperties = () => {
         transition={{ repeat: Infinity, duration: 1.8 }}
         className="mb-6"
       >
-        <FaHome className="text-6xl text-gray-300" />
+        <FaHome className="text-6xl text-[#EC6325]" />
       </motion.div>
 
       {/* Message */}
