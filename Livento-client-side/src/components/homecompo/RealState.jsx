@@ -62,6 +62,7 @@ const RealState = () => {
                 {/* btn */}
 
                 
+                <Link to={`/single-property/${item._id}`}>
                 <button
                 
                 
@@ -69,6 +70,7 @@ const RealState = () => {
                 >
                   <span className='text'> View Details</span>
                 </button>
+                </Link>
                 
 
 

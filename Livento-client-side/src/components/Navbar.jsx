@@ -12,6 +12,7 @@ import { IoLogOut } from 'react-icons/io5';
 const Navbar = () => {
 
   const {user,signOutUser}=use(AuthContext)
+  console.log(user);
   return (
     <motion.div className="navbar shadow-sm border-b-2 bg-[#0D263C] text-white"
      initial={{ y: -50, opacity: 0 }} 

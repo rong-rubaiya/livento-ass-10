@@ -9,6 +9,7 @@ import Register from "../pages/Register";
 import PrivateRoute from "./PrivateRoute";
 import Home from "../pages/Home";
 import SingleProp from "../pages/SingleProp";
+
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -40,6 +41,7 @@ export const router = createBrowserRouter([
           </PrivateRoute>),
           loader: ({params}) => fetch(`http://localhost:5000/propertis/${params.id}`)
       },
+       
       {
         path:'/add-property',
         element:

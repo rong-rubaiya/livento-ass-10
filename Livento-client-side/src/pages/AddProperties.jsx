@@ -19,7 +19,11 @@ const AddProperties = () => {
   location: e.target.location.value,
  postedDate: new Date().toISOString().split("T")[0],
  
-  created_by: user?.email || "Anonymous"
+  postedBy: {
+    name: user?.displayName || "Anonymous",
+    email: user?.email || "noemail@example.com",
+    profilePhoto: user?.photoURL || "https://randomuser.me/api/portraits/lego/1.jpg"
+  }
       
     }
 
