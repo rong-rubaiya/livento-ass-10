@@ -1,13 +1,14 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { FaStar } from "react-icons/fa";
 import { motion } from "framer-motion";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router"; 
 import NoRatings from "../components/NoRatings";
 import Swal from "sweetalert2";
+import bgphoto from "../assets/my-proper-bg.jpg";
 
 const MyRatings = () => {
-  const { user } = useContext(AuthContext);
+  const { user } = use(AuthContext);
   const [reviews, setReviews] = useState([]);
   const navigate = useNavigate();
 
@@ -33,19 +34,21 @@ const MyRatings = () => {
       confirmButtonText: "Yes, delete it!"
     }).then((result) => {
       if (result.isConfirmed) {
-        Promise.all([
-          fetch(`http://localhost:5000/userReviews/${reviewId}`, { method: "DELETE" }),
-          fetch(`http://localhost:5000/propertis/${propertyId}`, {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ $pull: { ratings: { _id: reviewId } } })
+        fetch(`http://localhost:5000/reviews/${reviewId}/${propertyId}`, { method: "DELETE" })
+          .then(res => res.json())
+          .then(data => {
+            if (data.success) {
+              // Remove from frontend
+              setReviews(reviews.filter(r => r._id !== reviewId));
+              Swal.fire("Deleted!", "Your review has been removed.", "success");
+            } else {
+              Swal.fire("Error", "Failed to delete review.", "error");
+            }
           })
-        ])
-          .then(() => {
-            setReviews(reviews.filter(r => r._id !== reviewId));
-            Swal.fire("Deleted!", "Your review has been removed.", "success");
-          })
-          .catch(err => console.error(err));
+          .catch(err => {
+            console.error(err);
+            Swal.fire("Error", "Something went wrong!", "error");
+          });
       }
     });
   };
@@ -55,67 +58,74 @@ const MyRatings = () => {
   }
 
   return (
-    <div className="min-h-screen p-8 bg-gray-100">
-      <h2 className="text-3xl font-bold text-center text-[#EC6325] mb-10">My Ratings</h2>
+    <div className="min-h-screen p-8 relative flex flex-col items-center">
 
-      {reviews.length === 0 ? (
-        <NoRatings />
-      ) : (
-        <div className="flex flex-col gap-6">
-          {reviews.map((review) => (
-            <motion.div
-              key={review._id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="flex flex-col sm:flex-row bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300"
-            >
-              {/* Property Thumbnail */}
-              <img
-                src={review.propertyThumbnail}
-                alt={review.propertyName}
-                className="w-full sm:w-48 h-48 object-cover"
-              />
+  {/* Background Image */}
+  <div
+    className="absolute inset-0 bg-cover bg-center z-0"
+    style={{ backgroundImage: `url(${bgphoto})` }}
+  />
+  {/* Overlay */}
+  <div className="absolute inset-0 bg-black/60 backdrop-blur-sm z-0" />
 
-              {/* Review Info */}
-              <div className="p-4 flex-1 flex flex-col justify-between">
-                <div>
-                  <h3 className="text-2xl font-bold text-[#EC6325]">{review.propertyName}</h3>
-                  <p className="text-gray-600 text-sm mb-2">By: {review.reviewerName}</p>
-                  <div className="flex text-yellow-400 mb-2">
-                    {[...Array(review.starRating)].map((_, i) => (
-                      <FaStar key={i} />
-                    ))}
-                  </div>
-                  <p className="text-gray-700 mb-2 line-clamp-4">{review.reviewText}</p>
+  {/* Content */}
+  <div className="relative z-10 w-full max-w-6xl">
+    <h2 className="text-3xl md:text-4xl  font-bold text-center text-white mb-10">My Ratings ({reviews.length})</h2>
+
+    {reviews.length === 0 ? (
+      <NoRatings />
+    ) : (
+      <div className="flex flex-col gap-6">
+        {reviews.map((review) => (
+          <motion.div
+            key={review._id}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="flex flex-col sm:flex-row bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300"
+          >
+            {/* Property Thumbnail */}
+            <img
+              src={review.propertyThumbnail}
+              alt={review.propertyName}
+              className="w-full sm:w-48 h-48 object-cover"
+            />
+
+            {/* Review Info */}
+            <div className="p-4 flex-1 flex flex-col justify-between">
+              <div>
+                <h3 className="text-2xl font-bold text-[#EC6325]">{review.propertyName}</h3>
+                <p className="text-gray-600 text-sm mb-2">By: {review.reviewerName}</p>
+                <div className="flex text-yellow-400 mb-2">
+                  {[...Array(review.starRating)].map((_, i) => (
+                    <FaStar key={i} />
+                  ))}
                 </div>
+                <p className="text-gray-700 mb-2 line-clamp-4">{review.reviewText}</p>
+              </div>
 
-                <div className="flex justify-between items-center mt-2">
-                  <p className="text-gray-400 text-xs sm:text-sm">
-                    Reviewed on {review.reviewDate}
-                  </p>
+              <div className="flex justify-between items-center mt-2">
+                <p className="text-gray-400 text-xs sm:text-sm">
+                  Reviewed on {review.reviewDate}
+                </p>
 
-                  {/* Action Buttons */}
-                  <div className="flex gap-2">
-                    <button
-                      className="slice"
-                      onClick={() => navigate(`/property/${review.propertyId}`)}
-                    >
-                      <span className="text">View</span>
-                    </button>
-                    <button
-                      className="slice bg-red-500 hover:bg-red-600"
-                      onClick={() => handleDelete(review._id, review.propertyId)}
-                    >
-                      <span className="text">Delete</span>
-                    </button>
-                  </div>
+                {/* Action Buttons */}
+                <div className="flex gap-2">
+                  <button
+                    className="slice bg-red-500 hover:bg-red-600"
+                    onClick={() => handleDelete(review._id, review.propertyId)}
+                  >
+                    <span className="text">Delete</span>
+                  </button>
                 </div>
               </div>
-            </motion.div>
-          ))}
-        </div>
-      )}
-    </div>
+            </div>
+          </motion.div>
+        ))}
+      </div>
+    )}
+  </div>
+</div>
+
   );
 };
 

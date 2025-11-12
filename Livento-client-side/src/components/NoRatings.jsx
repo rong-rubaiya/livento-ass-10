@@ -5,7 +5,7 @@ import { Link } from "react-router";
 const NoRatings = () => {
   return (
     <div className="col-span-full flex flex-col items-center justify-center text-center py-20">
-      {/* Animated Icon */}
+      
       <motion.div
         animate={{ y: [0, -8, 0] }}
         transition={{ repeat: Infinity, duration: 1.8 }}
