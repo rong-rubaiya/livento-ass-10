@@ -12,12 +12,13 @@ const Error = () => {
   }, [pathname]);
   return (
     <div className="flex flex-col  bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white overflow-hidden relative pb-20">
+      <title>Error page</title>
       <Navbar />
 
-      <main className="flex flex-col items-center justify-center flex-grow text-center px-6 relative">
+      <main className="flex flex-col items-center justify-center flex-grow text-center px-6 relative mt-16 mb-6">
         {/* Floating Emojis */}
         <motion.div
-          className="absolute text-6xl left-10 top-20"
+          className="absolute text-6xl left-10 top-20 "
           animate={{ y: [0, -20, 0], rotate: [0, 10, -10, 0] }}
           transition={{ repeat: Infinity, duration: 5, ease: "easeInOut" }}
         >

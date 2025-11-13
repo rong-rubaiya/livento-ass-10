@@ -67,6 +67,7 @@ const MyProperties = () => {
 
   return (
     <div className="relative min-h-screen py-10 px-4 md:px-10 overflow-hidden">
+      <title>My-properties</title>
       {/* Background */}
       <div
         className="absolute inset-0 bg-cover bg-center"

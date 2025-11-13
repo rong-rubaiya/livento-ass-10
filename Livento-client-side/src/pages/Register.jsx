@@ -95,6 +95,7 @@ const Register = () => {
 
   return (
     <div className="relative min-h-screen flex items-center justify-center py-20 ">
+      <title>Register</title>
       {/* Background */}
       <div
         className="absolute inset-0 bg-cover bg-center"

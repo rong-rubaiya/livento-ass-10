@@ -10,6 +10,7 @@ const Properties = () => {
 
   return (
     <div className="min-h-screen p-8 relative flex flex-col items-center">
+      <title>All-properties</title>
       {/* Background Image */}
       <div
         className="absolute inset-0  bg-center z-0"
@@ -30,7 +31,7 @@ const Properties = () => {
               key={index}
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.15 }}
+              transition={{ duration: 0.3, delay: index * 0.1 }}
               className="bg-white rounded-2xl shadow-xl overflow-hidden transform transition-all duration-300 hover:shadow-2xl"
             >
               {/* Image wrapper */}

@@ -75,7 +75,7 @@ const Login = () => {
     signInWithGoogle()
       .then((result) => {
         // console.log(result.user);
-       navigate(location?.state || "/");
+       navigate( "/");
       })
       .catch((error) => {
         console.log(error);
@@ -84,6 +84,7 @@ const Login = () => {
 
   return (
     <div className="relative min-h-screen flex items-center justify-center py-10">
+      <title>Login</title>
       {/* Background */}
       <div
         className="absolute inset-0 bg-cover bg-center"

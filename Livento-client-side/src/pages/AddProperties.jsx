@@ -95,6 +95,7 @@ const AddProperties = () => {
 
   return (
     <motion.div className="relative min-h-screen p-8">
+      <title>Add-properties</title>
       <div className="absolute inset-0">
         <img src={homebg} alt="bg" className="w-full h-full object-cover" />
         <div className="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>

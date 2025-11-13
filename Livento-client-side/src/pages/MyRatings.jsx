@@ -63,6 +63,7 @@ const MyRatings = () => {
 
   return (
     <div className="min-h-screen pb-8 relative flex flex-col items-center">
+      <title>My-ratings</title>
 
   {/* Background Image */}
   <div

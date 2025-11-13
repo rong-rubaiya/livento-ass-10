@@ -39,6 +39,7 @@ const Profile = () => {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
     >
+      <title>My-profile</title>
       {/* Background Image */}
       <div
         className="absolute inset-0 bg-cover bg-center z-0"

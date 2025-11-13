@@ -27,6 +27,7 @@ const RealState = () => {
       transition={{ duration: 0.8, ease: 'easeOut' }}
       className="py-10 px-4 md:px-8 lg:px-16 bg-[#0E243B]"
     >
+      
       <h2 className="text-3xl md:text-4xl font-bold text-center mb-8 text-white">
          Newest Properties
       </h2>
@@ -41,7 +42,7 @@ const RealState = () => {
               initial={{ opacity: 0, x: dir.x, y: dir.y }}
               whileInView={{ opacity: 1, x: 0, y: 0 }}
               viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.7, ease: 'easeOut', delay: index * 0.15 }}
+              transition={{ duration: 0.3, ease: 'easeOut', delay: index * 0.1 }}
               className="bg-white shadow-lg rounded-2xl overflow-hidden transform transition duration-300 text-black"
             >
               {/* Image wrapper */}
