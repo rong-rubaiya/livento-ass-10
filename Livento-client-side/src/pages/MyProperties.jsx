@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { motion } from "framer-motion";
 import { AuthContext } from "../context/AuthContext";
 import bgphoto from "../assets/my-proper-bg.jpg";
-import { Link, useNavigate } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import Swal from "sweetalert2";
 import NoProperties from "../components/ProProperties";
 
@@ -10,11 +10,15 @@ const MyProperties = () => {
   const { user } = useContext(AuthContext);
   const [properties, setProperties] = useState([]);
   const navigate = useNavigate();
+  const pathname=useLocation()
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
 
   // 🔹 Load user's properties
   useEffect(() => {
     if (user?.email) {
-      fetch(`http://localhost:5000/myproperties?email=${user.email}`)
+      fetch(`https://livento-server.vercel.app/myproperties?email=${user.email}`)
         .then((res) => res.json())
         .then((data) => {
           if (Array.isArray(data)) {
@@ -24,7 +28,7 @@ const MyProperties = () => {
             setProperties([]);
           }
         })
-        .catch((err) => console.error("Error fetching properties:", err));
+        .catch((err) => console.log(err));
     }
   }, [user]);
 
@@ -41,8 +45,8 @@ const MyProperties = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         Promise.all([
-          fetch(`http://localhost:5000/myproperties/${id}`, { method: "DELETE" }),
-          fetch(`http://localhost:5000/propertis/${mainId}`, { method: "DELETE" }),
+          fetch(`https://livento-server.vercel.app/myproperties/${id}`, { method: "DELETE" }),
+          fetch(`https://livento-server.vercel.app/propertis/${mainId}`, { method: "DELETE" }),
         ])
           .then(() => {
             setProperties(properties.filter((p) => p._id !== id));
@@ -71,7 +75,7 @@ const MyProperties = () => {
       <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
 
       {/* Header */}
-      <div className="relative z-10 text-center mb-16">
+      <div className="relative z-10 text-center my-16">
         <h2 className="text-3xl md:text-4xl font-bold text-white mb-5">
           My Properties <span>({properties.length})</span>
         </h2>

@@ -2,7 +2,7 @@ import React, { use, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { FaStar } from "react-icons/fa";
 import { motion } from "framer-motion";
-import { useNavigate } from "react-router"; 
+import { useLocation, useNavigate } from "react-router"; 
 import NoRatings from "../components/NoRatings";
 import Swal from "sweetalert2";
 import bgphoto from "../assets/my-proper-bg.jpg";
@@ -11,11 +11,15 @@ const MyRatings = () => {
   const { user } = use(AuthContext);
   const [reviews, setReviews] = useState([]);
   const navigate = useNavigate();
+  const pathname=useLocation()
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
 
   // Load user reviews
   useEffect(() => {
     if (user?.email) {
-      fetch(`http://localhost:5000/userReviews?email=${user.email}`)
+      fetch(`https://livento-server.vercel.app/userReviews?email=${user.email}`)
         .then(res => res.json())
         .then(data => setReviews(data))
         .catch(err => console.error(err));
@@ -34,7 +38,7 @@ const MyRatings = () => {
       confirmButtonText: "Yes, delete it!"
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:5000/reviews/${reviewId}/${propertyId}`, { method: "DELETE" })
+        fetch(`https://livento-server.vercel.app/reviews/${reviewId}/${propertyId}`, { method: "DELETE" })
           .then(res => res.json())
           .then(data => {
             if (data.success) {
@@ -58,7 +62,7 @@ const MyRatings = () => {
   }
 
   return (
-    <div className="min-h-screen p-8 relative flex flex-col items-center">
+    <div className="min-h-screen pb-8 relative flex flex-col items-center">
 
   {/* Background Image */}
   <div
@@ -70,7 +74,7 @@ const MyRatings = () => {
 
   {/* Content */}
   <div className="relative z-10 w-full max-w-6xl">
-    <h2 className="text-3xl md:text-4xl  font-bold text-center text-white mb-10">My Ratings ({reviews.length})</h2>
+    <h2 className="text-3xl md:text-4xl  font-bold text-center text-white mt-28">My Ratings ({reviews.length})</h2>
 
     {reviews.length === 0 ? (
       <NoRatings />
@@ -91,7 +95,7 @@ const MyRatings = () => {
             />
 
             {/* Review Info */}
-            <div className="p-4 flex-1 flex flex-col justify-between">
+            <div className="p-4  flex-1 flex flex-col justify-between">
               <div>
                 <h3 className="text-2xl font-bold text-[#EC6325]">{review.propertyName}</h3>
                 <p className="text-gray-600 text-sm mb-2">By: {review.reviewerName}</p>

@@ -1,17 +1,38 @@
 import React, { useContext, useState, useEffect } from "react";
-import { Link, useLoaderData } from "react-router";
+import { Link, useLoaderData, useLocation, useParams } from "react-router";
 import { motion } from "framer-motion";
 import { FaStar, FaUserCircle, FaMapMarkerAlt, FaCalendarAlt } from "react-icons/fa";
 import { AuthContext } from "../context/AuthContext";
 import RatingInput from "../components/RatingInput";
 import Swal from "sweetalert2";
+import Loading from './../components/Loading';
 
 const SingleProp = () => {
-  const data = useLoaderData();
-  const property = data.result;
-  const { user } = useContext(AuthContext);
+   const { user } = useContext(AuthContext);
 
+  const {id}=useParams()
+  const [property,SetProperty]=useState({})
+  const[loading,setLoading]=useState(true)
+ useEffect(() => {
+    fetch(`https://livento-server.vercel.app/propertis/${id}`, {
+      headers: {
+        authorization: `Bearer ${user.accessToken}`
+      }
+    })
+      .then(res => res.json())
+      .then(data => {
+        SetProperty(data.result)
+        setLoading(false)
+      })
+      .catch(err => console.error(err));
+  }, [id]);
+ 
   const [ratings, setRatings] = useState(property.ratings || []);
+
+  const pathname=useLocation()
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
 
   // Refresh ratings after adding a new review
   const addNewRating = (newRating) => {
@@ -32,7 +53,7 @@ const SingleProp = () => {
     propertyThumbnail: property.image
   };
 
-  fetch(`http://localhost:5000/propertis/${property._id}/reviews`, {
+  fetch(`https://livento-server.vercel.app/propertis/${property._id}/reviews`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(reviewData),
@@ -48,15 +69,17 @@ const SingleProp = () => {
     });
 };
 
-
+if(loading){
+  return <Loading/>
+}
   return (
-    <div className="min-h-screen bg-[#3e4049] py-10 px-4 md:px-20">
+   <div className="min-h-screen bg-[#3e4049] py-10 px-4 md:px-20">
       {/* Hero Image */}
       <motion.div
         initial={{ opacity: 0, y: -30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
-        className="relative w-full h-[450px] rounded-3xl overflow-hidden shadow-xl"
+        className="relative w-full h-[450px] rounded-3xl overflow-hidden shadow-xl mt-20"
       >
         <img
           src={property.image}

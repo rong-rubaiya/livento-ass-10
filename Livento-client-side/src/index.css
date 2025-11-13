@@ -1,5 +1,9 @@
 @import "tailwindcss";
 @plugin "daisyui";
+html, body {
+  overflow-x: hidden;  /* Disable horizontal overflow */
+  margin: 0;           /* Remove any default margin */
+}
 
 /* Animate active link */
 a.active {

@@ -1,6 +1,6 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Link, useNavigate } from 'react-router';
+import { Link, useLocation, useNavigate } from 'react-router';
 import Swal from 'sweetalert2';
 import { FcGoogle } from 'react-icons/fc';
 import { FaFacebook } from 'react-icons/fa';
@@ -18,6 +18,11 @@ const Register = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [name, setName] = useState('');
   const navigate = useNavigate();
+
+  const pathname=useLocation()
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
 
   // Password validation
   const hasUppercase = /[A-Z]/.test(password);
@@ -89,7 +94,7 @@ const Register = () => {
   };
 
   return (
-    <div className="relative min-h-screen flex items-center justify-center py-10">
+    <div className="relative min-h-screen flex items-center justify-center py-20 ">
       {/* Background */}
       <div
         className="absolute inset-0 bg-cover bg-center"
@@ -102,13 +107,13 @@ const Register = () => {
         initial={{ opacity: 0, y: -50, scale: 0.95 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ duration: 0.8, ease: 'easeOut' }}
-        className="relative w-full max-w-md p-8 bg-white rounded-xl shadow-2xl z-10"
+        className="relative w-full max-w-md p-8 bg-white rounded-xl shadow-2xl z-10 mt-10"
       >
         <h2 className="text-3xl font-bold text-center mb-6 text-gray-800">
           Create Your Account
         </h2>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4 ">
           {/* Name */}
           <input
             type="text"
@@ -210,17 +215,20 @@ const Register = () => {
 
         {/* Social Login */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <button
-            onClick={handleGoogleSignIn}
-            className="btn btn-primary border-none shadow-black hover:scale-110 transition ease-in-out duration-300 bg-white text-black flex items-center justify-center gap-2"
-          >
-            <FcGoogle size={24} /> Sign in with Google
-          </button>
-
-          <button className="btn btn-primary border-none shadow-black hover:scale-110 transition ease-in-out duration-300 text-white flex items-center justify-center gap-2">
-            <FaFacebook size={24} /> Sign in with Facebook
-          </button>
-        </div>
+                  
+                           
+                           <button
+                             onClick={handleGoogleSignIn}
+                             className="btn btn-primary border-none shadow-black hover:scale-110 transition ease-in-out duration-300 bg-white text-black flex items-center justify-center gap-2"
+                           >
+                             <FcGoogle size={24} /> Sign in with Google
+                           </button>
+                 
+                           
+                 <button className="btn btn-primary border-none shadow-black hover:scale-110 transition ease-in-out duration-300 text-white flex items-center justify-center gap-2">
+                   <FaFacebook size={24} /> Sign in with Facebook
+                 </button>
+               </div>
 
         {/* Already have account */}
         <p className="text-center mt-4 text-gray-600">

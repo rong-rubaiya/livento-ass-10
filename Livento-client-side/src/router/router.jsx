@@ -9,11 +9,14 @@ import Register from "../pages/Register";
 import PrivateRoute from "./PrivateRoute";
 import Home from "../pages/Home";
 import SingleProp from "../pages/SingleProp";
+import Error from "../pages/Error";
+import Profile from "../pages/Profile";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout/>,
+    errorElement:<Error/>,
     children:[
        {
         path:'/',
@@ -21,7 +24,7 @@ export const router = createBrowserRouter([
         element: 
           
             <Home />,
-            loader:()=>fetch('http://localhost:5000/propertis'),
+            loader:()=>fetch('https://livento-server.vercel.app/propertis'),
             
          
       },
@@ -30,7 +33,7 @@ export const router = createBrowserRouter([
         element: 
           
             <Properties/>,
-            loader:()=>fetch('http://localhost:5000/propertis')
+            loader:()=>fetch('https://livento-server.vercel.app/propertis')
          
       },
       {
@@ -39,7 +42,7 @@ export const router = createBrowserRouter([
             <SingleProp>
             </SingleProp>
           </PrivateRoute>),
-          loader: ({params}) => fetch(`http://localhost:5000/propertis/${params.id}`)
+         
       },
        
       {
@@ -61,6 +64,14 @@ export const router = createBrowserRouter([
         element:
          (<PrivateRoute>
         <MyRatings/>
+        </PrivateRoute>)
+        
+      },
+      {
+        path:'/my-profile',
+        element:
+         (<PrivateRoute>
+        <Profile/>
         </PrivateRoute>)
         
       },

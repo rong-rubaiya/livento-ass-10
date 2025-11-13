@@ -19,6 +19,10 @@ const AddProperties = () => {
   })
 
   const editingProperty = location.state?.property
+  const pathname=useLocation()
+    useEffect(() => {
+      window.scrollTo(0, 0);
+    }, [pathname]);
 
   useEffect(() => {
     if (editingProperty) {
@@ -56,8 +60,8 @@ const AddProperties = () => {
   };
 
   const url = editingProperty
-    ? `http://localhost:5000/propertis/${editingProperty.mainId || editingProperty._id}`
-    : "http://localhost:5000/propertis";
+    ? `https://livento-server.vercel.app/propertis/${editingProperty.mainId || editingProperty._id}`
+    : "https://livento-server.vercel.app/propertis";
 
   const method = editingProperty ? "PUT" : "POST";
 
@@ -83,7 +87,7 @@ const AddProperties = () => {
       });
     })
     .catch((err) => {
-      console.error(err);
+      
       Swal.fire({ title: "Error!", text: "Something went wrong", icon: "error" });
     });
 };
@@ -96,7 +100,7 @@ const AddProperties = () => {
         <div className="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
       </div>
 
-      <div className="relative z-10 max-w-3xl mx-auto bg-[#F3F4F6] px-4 py-8 rounded-4xl">
+      <div className="relative z-10 max-w-3xl mx-auto bg-[#F3F4F6] px-4 py-8 rounded-4xl mt-20">
         <h2 className="text-3xl md:text-4xl font-bold text-center text-[#EC6325] mb-10">
           {editingProperty ? "Update Property" : "Add New Property"}
         </h2>

@@ -6,7 +6,7 @@ import bgphoto from "../assets/my-proper-bg.jpg";
 
 const Properties = () => {
   const properties = useLoaderData();
-  console.log(properties);
+  // console.log(properties);
 
   return (
     <div className="min-h-screen p-8 relative flex flex-col items-center">
@@ -20,8 +20,8 @@ const Properties = () => {
 
       {/* Content */}
       <div className="relative z-10 w-full max-w-7xl flex flex-col items-center">
-        <h2 className="text-3xl font-bold text-white mb-8 text-center">
-          Available Properties
+        <h2 className="text-3xl font-bold text-white  text-center my-20">
+          Available Properties ({properties.length})
         </h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full">

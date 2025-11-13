@@ -5,10 +5,21 @@ import { FaHome } from "react-icons/fa";
 
 const Home = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-orange-400 to-pink-500">
-      <h1 className="text-5xl font-bold text-white animate-pulse">
-        Welcome Home!
-      </h1>
+    <div className="">
+      <div className="text-5xl text-center flex font-bold text-[#EC6325]  animate-pulse gap-3">
+        <span className="loading"></span>
+        <span className="loading"></span>
+        <span className="loading"></span>
+        <span className="loading"></span>
+        
+        <FaHome/>
+        
+        
+        <span className="loading"></span>
+        <span className="loading"></span>
+        <span className="loading"></span>
+        <span className="loading"></span>
+      </div>
     </div>
   );
 };
@@ -18,7 +29,7 @@ const Loading = () => {
 
   useEffect(() => {
     // Simulate 3.5 sec loading
-    const timer = setTimeout(() => setLoaded(true), 3500);
+    const timer = setTimeout(() => setLoaded(true), 500);
     return () => clearTimeout(timer);
   }, []);
 

@@ -1,4 +1,4 @@
-import React, { use, useState } from 'react';
+import React, { use, useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import Swal from 'sweetalert2';
 import homebg from '../assets/home-bg.jpg';
@@ -14,11 +14,15 @@ const Login = () => {
   const [eyeOpen, setEyeOpen] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const pathname=useLocation()
+    useEffect(() => {
+      window.scrollTo(0, 0);
+    }, [pathname]);
 
   const { signInUser, signInWithGoogle } = use(AuthContext);
   const location = useLocation();
   const navigate = useNavigate();
-  console.log(location);
+  // console.log(location);
 
   // Password validation conditions
   const hasUppercase = /[A-Z]/.test(password);
@@ -41,10 +45,10 @@ const Login = () => {
     const email = e.target.email.value;
     const password = e.target.password.value;
 
-    console.log(email, password);
+    // console.log(email, password);
     signInUser(email, password)
       .then((result) => {
-        console.log(result.user);
+        // console.log(result.user);
         Swal.fire({
                   title: "User login successfully!",
                   icon: "success",
@@ -53,7 +57,7 @@ const Login = () => {
         navigate("/");
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
         Swal.fire({
         icon: "error",
         title: "Oops...",
@@ -70,8 +74,8 @@ const Login = () => {
   const handleGoogleSignIn = () => {
     signInWithGoogle()
       .then((result) => {
-        console.log(result.user);
-       navigate(location?.state || "/home");
+        // console.log(result.user);
+       navigate(location?.state || "/");
       })
       .catch((error) => {
         console.log(error);
@@ -92,7 +96,7 @@ const Login = () => {
         initial={{ opacity: 0, y: -50, scale: 0.95 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ duration: 0.8, ease: 'easeOut' }}
-        className="relative w-full max-w-md p-8 bg-white sm:rounded-xl shadow-2xl"
+        className="relative w-full max-w-md mt-20  p-8 bg-white rounded-xl shadow-2xl"
       >
         <h2 className="text-3xl font-bold text-center mb-6 text-gray-800">
           Login to Your Account
@@ -156,7 +160,7 @@ const Login = () => {
 
         
         {/* Register Link */}
-        <p className="text-center  text-black py-4 hidden sm:block">
+        <p className="text-center  text-black py-4 ">
           New here?{' '}
           <Link to="/register" className="text-[#EC6325] italic font-semibold underline">
             Create an account
@@ -172,11 +176,16 @@ const Login = () => {
 
         {/* Social Login */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <button
-          onClick={handleGoogleSignIn}
-          className="btn btn-primary border-none shadow-black hover:scale-110 transition ease-in-out duration-300 bg-white text-black flex items-center justify-center gap-2">
-            <FcGoogle size={24} /> Sign in with Google
-          </button>
+           
+                    
+                    <button
+                      onClick={handleGoogleSignIn}
+                      className="btn btn-primary border-none shadow-black hover:scale-110 transition ease-in-out duration-300 bg-white text-black flex items-center justify-center gap-2"
+                    >
+                      <FcGoogle size={24} /> Sign in with Google
+                    </button>
+          
+                    
           <button className="btn btn-primary border-none shadow-black hover:scale-110 transition ease-in-out duration-300 text-white flex items-center justify-center gap-2">
             <FaFacebook size={24} /> Sign in with Facebook
           </button>

@@ -19,7 +19,7 @@ const NoRatings = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
-        className="text-2xl md:text-3xl font-semibold  mb-3"
+        className="text-2xl md:text-3xl font-semibold text-white  mb-3"
       >
         No Ratings Found
       </motion.h2>

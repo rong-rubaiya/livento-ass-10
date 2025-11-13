@@ -35,7 +35,7 @@ const Slider = ({ data }) => {
             <SwiperSlide key={index}>
               {/* Background Image */}
               <div
-                className="relative w-full h-[70vh] sm:h-[80vh] md:h-[85vh] lg:h-[90vh] flex items-center justify-center bg-center bg-cover"
+                className="relative w-full h-[70vh] sm:h-[80vh] md:h-[85vh] lg:h-[90vh] flex items-center justify-center bg-center bg-cover mt-8"
                 style={{
                   backgroundImage: `url(${item.image}?auto=format&fit=crop&w=1200&q=80)`,
                 }}

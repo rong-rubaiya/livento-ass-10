@@ -1,5 +1,5 @@
-import React, { use } from 'react';
-import { Link, NavLink } from 'react-router';
+import React, { use, useEffect, useState } from 'react';
+import { Link, Navigate, NavLink } from 'react-router';
 import logo from '../assets/liventologo.png';
 import { motion } from 'framer-motion';
 import './common.css'; 
@@ -10,24 +10,34 @@ import { IoLogOut } from 'react-icons/io5';
 
 
 const Navbar = () => {
-
+ const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) setScrolled(true);
+      else setScrolled(false);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
   const {user,signOutUser}=use(AuthContext)
-  console.log(user);
+  // console.log(user);
   return (
-    <motion.div className="navbar shadow-sm border-b-2 bg-[#0D263C] text-white"
+    <motion.div className={`fixed  w-full top-0 z-50 transition-all duration-300 bg-[#0D263C] text-gray-300  ${
+    scrolled ? 'bg-[#0D263C] w-full text-gray-300 shadow-xl' : ''
+  }`}
      initial={{ y: -50, opacity: 0 }} 
     animate={{ y: 0, opacity: 1 }} 
     transition={{ duration: 1.5 }}>
-      <div className="w-full md:w-11/12 mx-auto flex :flex-row items-center justify-between">
+      <div className="w-full md:w-11/12 mx-auto flex  flex-row items-center justify-between px-6 md:px-0 py-6">
         {/* Logo */}
         <div className="">
           <NavLink  to="/home">
-            <img className="w-18 rounded-full" src={logo} alt="Livento Logo" />
+            <img className="w-12 rounded-full" src={logo} alt="Livento Logo" />
           </NavLink>
         </div>
 
         {/* Navigation Links */}
-        <motion.div className="hidden lg:flex gap-9 items-center font-bold"
+        <motion.div className="hidden md:flex gap-9 items-center font-bold"
         initial={{ x: -50, opacity: 0 }} 
     animate={{ x: 0, opacity: 1 }} 
     transition={{ duration: 1.5 }}>
@@ -43,8 +53,9 @@ const Navbar = () => {
 
         {/*button */}
        
- {user ? (
-          <div className="dropdown dropdown-end z-50 text-black ml-[40%] sm:ml-0">
+ <div className=''>
+{user ? (
+          <div className="dropdown dropdown-end z-50 text-black mr-3 md:mr-0 ">
             <div
               tabIndex={0}
               role="button"
@@ -67,7 +78,7 @@ const Navbar = () => {
                 <li className="text-xs">{user.email}</li>
               </div>
               <li className="mt-3">
-                <Link to={"/profile"}>
+                <Link to={"/my-profile"}>
                   <FaUser /> Profile
                 </Link>
               </li>
@@ -82,20 +93,17 @@ const Navbar = () => {
                 <button
                 onClick={signOutUser}
                   
-                  className="btn btn-xs text-left bg-[#EC6325] text-white"
+                  className="slice"
                 >
-                  <IoLogOut/> Logout
+                  <IoLogOut/><span className='text'> Logout</span>
                 </button>
               </li>
             </ul>
           </div>
         ) : (
            <div className="dropdown dropdown-end">
-            <NavLink to="/login">
-             <button className="border-1 bg-black rounded-2xl px-2 py-2 block sm:hidden">
-
-              <span className="text-[#EC6325] text-sm">Login / Signup</span>
-            </button>
+            <NavLink to="/login"
+          >
              
              <button className="slice hidden sm:block">
 
@@ -110,10 +118,10 @@ const Navbar = () => {
           </div>
         )}
 
-        {/* Mobile Menu */}
-        <div className="lg:hidden dropdown">
+         {/* Mobile Menu */}
+        <div className="md:hidden dropdown border-2 border-white h-10">
           <label tabIndex={0} className="btn btn-ghost btn-circle">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 le" fill="none"
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6" fill="none"
               viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                 d="M4 6h16M4 12h16M4 18h16" />
@@ -130,6 +138,10 @@ const Navbar = () => {
             <li><NavLink to="/login">Login / Signup</NavLink></li>
           </ul>
         </div>
+
+ </div>
+
+       
       </div>
     </motion.div>
   );

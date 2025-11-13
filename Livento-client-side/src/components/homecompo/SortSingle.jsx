@@ -6,7 +6,7 @@ import { FaStar, FaUserCircle, FaMapMarkerAlt, FaCalendarAlt } from "react-icons
 const SortSingle = () => {
   const data = useLoaderData();
   const property = data.result;
-  console.log(property);
+  // console.log(property);
 
   return (
     <div></div>
