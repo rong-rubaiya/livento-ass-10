@@ -86,6 +86,15 @@ async function run() {
       }
     });
 
+    // search
+
+    app.get('/search',async(req,res)=>{
+      const search_text=req.query.search;
+      const result= await proCollection.find({
+propertyName: {$regex: search_text, $options:'i'}}).toArray()
+      res.send(result)
+    })
+
     // Single property
     app.get('/propertis/:id',verifyToken, async (req, res) => {
       const { id } = req.params;
@@ -116,7 +125,7 @@ async function run() {
       }
     });
 
-    // ✅ Get my properties
+    // Get my properties
     app.get('/myproperties', async (req, res) => {
       try {
         const email = req.query.email;
@@ -174,7 +183,7 @@ async function run() {
 
 
 
-    // reviews
+    // reviwes
 
     app.post("/propertis/:id/reviews", async (req, res) => {
   const { id } = req.params; 
@@ -199,7 +208,7 @@ async function run() {
   }
 });
 
-// Get reviews of  user
+// Get reviw of  user
 app.get("/userReviews", async (req, res) => {
   try {
     const email = req.query.email;
@@ -237,6 +246,8 @@ app.delete('/reviews/:reviewId/:propertyId', async (req, res) => {
     res.send({ success: false, message: err.message });
   }
 });
+
+// sort
 
 
     // await client.db("admin").command({ ping: 1 });
