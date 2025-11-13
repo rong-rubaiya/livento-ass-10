@@ -4,10 +4,19 @@ const cors = require('cors')
 require('dotenv').config()
 
 const app = express()
-const port = 5000
+const port = process.env.PORT || 5000
 
 app.use(cors())
 app.use(express.json())
+
+const admin = require("firebase-admin");
+
+const serviceAccount = require("./serviceKey.json");
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount)
+});
+
 
 const uri = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0.dqh3ts3.mongodb.net/?appName=Cluster0`;
 
@@ -18,10 +27,37 @@ const client = new MongoClient(uri, {
     deprecationErrors: true,
   }
 });
+// midleware
+
+const verifyToken=async(req,res,next)=>{
+const authorization=req.headers.authorization; 
+const token=authorization.split(' ')[1]
+
+if(!token){
+  res.status(401).send({
+  message:'Token not found'
+})
+}
+
+try{
+ await admin.auth().verifyIdToken(token)
+
+next()
+}catch(err){
+res.status(401).send({
+  message:'unauthorized access'
+})
+}
+
+
+
+
+
+}
 
 async function run() {
   try {
-    await client.connect();
+    // await client.connect();
     // collecction
 
     const db = client.db('livento-db');
@@ -51,7 +87,7 @@ async function run() {
     });
 
     // Single property
-    app.get('/propertis/:id', async (req, res) => {
+    app.get('/propertis/:id',verifyToken, async (req, res) => {
       const { id } = req.params;
       const result = await proCollection.findOne({ _id: new ObjectId(id) });
       res.send({ success: true, result });
@@ -118,7 +154,7 @@ async function run() {
           updatedMyProperties: resultMy.modifiedCount
         });
       } catch (err) {
-        res.status(500).send({ success: false, message: err.message });
+        res.send({ success: false, message: err.message });
       }
     });
 
@@ -132,7 +168,7 @@ async function run() {
         await myproperCollection.deleteOne({ mainId: objectId });
         res.send({ success: true });
       } catch (err) {
-        res.status(500).send({ success: false, message: err.message });
+        res.send({ success: false, message: err.message });
       }
     });
 
@@ -163,7 +199,7 @@ async function run() {
   }
 });
 
-// Get reviews of a specific user
+// Get reviews of  user
 app.get("/userReviews", async (req, res) => {
   try {
     const email = req.query.email;
@@ -203,7 +239,7 @@ app.delete('/reviews/:reviewId/:propertyId', async (req, res) => {
 });
 
 
-    await client.db("admin").command({ ping: 1 });
+    // await client.db("admin").command({ ping: 1 });
     console.log("✅ MongoDB connected successfully!");
   } finally {
     // await client.close();
