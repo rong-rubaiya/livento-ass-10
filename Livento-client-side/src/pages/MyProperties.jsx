@@ -73,14 +73,14 @@ const MyProperties = () => {
         className="absolute inset-0 bg-cover bg-center"
         style={{ backgroundImage: `url(${bgphoto})` }}
       />
-      <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
+      <div className="absolute inset-0 bg-gray-400/60 dark:bg-black/60 backdrop-blur-sm" />
 
       {/* Header */}
       <div className="relative z-10 text-center my-16">
-        <h2 className="text-3xl md:text-4xl font-bold text-white mb-5">
+        <h2 className="text-3xl md:text-4xl font-bold text-black dark:text-white mb-5 mt-20">
           My Properties <span>({properties.length})</span>
         </h2>
-        <p className="text-gray-200 text-lg">
+        <p className="text-gray-900 dark:text-gray-200 text-lg">
           Manage and explore your listed properties beautifully.
         </p>
       </div>

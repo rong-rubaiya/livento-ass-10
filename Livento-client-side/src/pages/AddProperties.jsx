@@ -98,7 +98,7 @@ const AddProperties = () => {
       <title>Add-properties</title>
       <div className="absolute inset-0">
         <img src={homebg} alt="bg" className="w-full h-full object-cover" />
-        <div className="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
+        <div className="absolute inset-0 bg-gray-400/60 dark:bg-black/60 backdrop-blur-sm"></div>
       </div>
 
       <div className="relative z-10 max-w-3xl mx-auto bg-[#F3F4F6] px-4 py-8 rounded-4xl mt-20">

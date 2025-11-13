@@ -71,11 +71,11 @@ const MyRatings = () => {
     style={{ backgroundImage: `url(${bgphoto})` }}
   />
   {/* Overlay */}
-  <div className="absolute inset-0 bg-black/60 backdrop-blur-sm z-0" />
+  <div className="absolute inset-0 bg-gray-400/60 dark:bg-black/60 backdrop-blur-sm z-0" />
 
   {/* Content */}
   <div className="relative z-10 w-full max-w-6xl">
-    <h2 className="text-3xl md:text-4xl  font-bold text-center text-white mt-28">My Ratings ({reviews.length})</h2>
+    <h2 className="text-3xl md:text-4xl  font-bold text-center text-black dark:text-white mt-28">My Ratings ({reviews.length})</h2>
 
     {reviews.length === 0 ? (
       <NoRatings />

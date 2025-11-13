@@ -14,7 +14,7 @@ const RatingInput = ({ onSubmit }) => {
   };
 
   return (
-    <div className="bg-white p-4 rounded-3xl shadow-md ">
+    <div className="bg-white dark:text-black p-4 rounded-3xl shadow-md ">
       <h3 className="text-lg font-semibold mb-2">Add Your Review</h3>
 
       {/* Star Rating */}

@@ -19,7 +19,7 @@ const NoProperties = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
-        className="text-2xl md:text-3xl font-semibold text-gray-200 mb-3"
+        className="text-2xl md:text-3xl font-semibold text-black dark:text-white mb-3"
       >
         No Properties Found
       </motion.h2>
@@ -28,7 +28,7 @@ const NoProperties = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.4, duration: 0.8 }}
-        className="text-gray-400 max-w-md mb-8"
+        className="text-gray-900 dark:text-gray-400 max-w-md mb-8"
       >
         You haven’t listed any properties yet.  
         Start adding your first one and showcase it beautifully!

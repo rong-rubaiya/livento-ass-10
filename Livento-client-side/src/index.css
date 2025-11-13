@@ -1,5 +1,10 @@
 @import "tailwindcss";
-@plugin "daisyui";
+@plugin "daisyui" {
+  themes: light --default, dark --prefersdark;
+}
+
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
 html, body {
   overflow-x: hidden;  /* Disable horizontal overflow */
   margin: 0;           /* Remove any default margin */

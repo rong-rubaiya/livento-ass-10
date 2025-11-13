@@ -25,10 +25,10 @@ const RealState = () => {
       initial={{ opacity: 0, y: -50, scale: 0.95 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 0.8, ease: 'easeOut' }}
-      className="py-10 px-4 md:px-8 lg:px-16 bg-[#0E243B]"
+      className="py-10 px-4 md:px-8 lg:px-16 bg-gray-50 dark:bg-[#0E243B]"
     >
       
-      <h2 className="text-3xl md:text-4xl font-bold text-center mb-8 text-white">
+      <h2 className="text-3xl md:text-4xl font-bold text-center mb-8 text-black dark:text-white">
          Newest Properties
       </h2>
 

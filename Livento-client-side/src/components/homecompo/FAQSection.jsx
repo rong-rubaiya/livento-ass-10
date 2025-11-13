@@ -35,7 +35,7 @@ const FAQSection = () => {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.8 }}
-      className="relative py-16 px-4 md:px-12 lg:px-20 bg-gray-50 overflow-hidden"
+      className="relative py-16 px-4 md:px-12 lg:px-20 bg-gray-50 dark:bg-[#0E243B] overflow-hidden"
     >
       {/* Floating Question Marks */}
       <motion.span
@@ -70,10 +70,10 @@ const FAQSection = () => {
 
       {/* Section Heading */}
       <div className="text-center mb-12 relative z-10">
-        <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
+        <h2 className="text-3xl md:text-4xl font-bold text-gray-800  dark:text-gray-200 mb-4">
           Frequently Asked Questions
         </h2>
-        <p className="text-gray-600 max-w-2xl mx-auto">
+        <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
           Answers to common questions about buying, selling, or renting properties.
         </p>
       </div>

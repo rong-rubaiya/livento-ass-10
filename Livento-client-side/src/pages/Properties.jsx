@@ -17,11 +17,11 @@ const Properties = () => {
         style={{ backgroundImage: `url(${bgphoto})` }}
       />
       {/* Overlay */}
-      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm z-0" />
+      <div className="absolute inset-0 bg-gray-200/60 dark:bg-black/60 backdrop-blur-sm z-0" />
 
       {/* Content */}
       <div className="relative z-10 w-full max-w-7xl flex flex-col items-center">
-        <h2 className="text-3xl font-bold text-white  text-center my-20">
+        <h2 className="text-3xl font-bold text-black dark:text-white   text-center my-20">
           Available Properties ({properties.length})
         </h2>
 

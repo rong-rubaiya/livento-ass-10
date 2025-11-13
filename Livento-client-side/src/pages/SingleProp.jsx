@@ -73,7 +73,7 @@ if(loading){
   return <Loading/>
 }
   return (
-   <div className="min-h-screen bg-[#3e4049] py-10 px-4 md:px-20">
+   <div className="min-h-screen bg-gray-300 dark:bg-[#3e4049] py-10 px-4 md:px-20">
     <title> {property.propertyName}</title>
       {/* Hero Image */}
       <motion.div
@@ -148,7 +148,7 @@ if(loading){
         transition={{ duration: 0.6, delay: 0.7 }}
         className="mt-10 bg-gray-100 p-8 rounded-3xl shadow-lg"
       >
-        <h2 className="text-2xl font-bold mb-6 text-gray-800 border-b pb-4">
+        <h2 className="text-2xl font-bold mb-6 text-gray-800 dark-bl border-b pb-4">
           Ratings & Reviews
         </h2>
 

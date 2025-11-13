@@ -46,11 +46,11 @@ const Profile = () => {
         style={{ backgroundImage: `url(${bgphoto})` }}
       />
       {/* Overlay */}
-      <div className="absolute inset-0 bg-black/40 backdrop-blur-sm z-0 m" />
+      <div className="absolute inset-0  bg-gray-200/60 dark:bg-black/60 backdrop-blur-sm z-0 m" />
 
       {/* Profile Card */}
       <motion.div
-        className="relative z-10 bg-gray-200/90 shadow-2xl rounded-2xl p-8 w-full max-w-md border border-gray-300 mt-28 mb-9"
+        className="relative z-10 bg-white dark:bg-gray-200/90 shadow-2xl rounded-2xl p-8 w-full max-w-md border border-gray-300 mt-28 mb-9"
         whileHover={{ scale: 1.02 }}
         transition={{ type: "spring", stiffness: 120 }}
       >

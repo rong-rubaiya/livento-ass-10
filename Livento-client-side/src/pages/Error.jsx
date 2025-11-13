@@ -13,7 +13,7 @@ const Error = () => {
   return (
     <div className="flex flex-col  bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white overflow-hidden relative pb-20">
       <title>Error page</title>
-      <Navbar />
+      
 
       <main className="flex flex-col items-center justify-center flex-grow text-center px-6 relative mt-16 mb-6">
         {/* Floating Emojis */}
@@ -89,7 +89,7 @@ const Error = () => {
           </Link>
       </main>
 
-      <Footer />
+      
     </div>
   );
 };

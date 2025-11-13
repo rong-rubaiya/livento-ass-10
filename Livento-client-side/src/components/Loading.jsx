@@ -34,7 +34,7 @@ const Loading = () => {
   }, []);
 
   return (
-    <div className="relative w-full h-screen flex items-center justify-center bg-gray-900">
+    <div className="relative w-full h-screen flex items-center justify-center bg-gray-300 dark:bg-gray-900">
       <AnimatePresence>
         {!loaded && (
           <motion.div
