@@ -73,7 +73,7 @@ if(loading){
   return <Loading/>
 }
   return (
-   <div className="min-h-screen bg-gray-300 dark:bg-[#3e4049] py-10 px-4 md:px-20">
+   <div className="min-h-screen bg-gray-400 dark:bg-[#3e4049] py-10 px-4 md:px-20">
     <title> {property.propertyName}</title>
       {/* Hero Image */}
       <motion.div

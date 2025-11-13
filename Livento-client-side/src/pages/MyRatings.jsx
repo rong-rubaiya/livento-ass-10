@@ -75,7 +75,7 @@ const MyRatings = () => {
 
   {/* Content */}
   <div className="relative z-10 w-full max-w-6xl">
-    <h2 className="text-3xl md:text-4xl  font-bold text-center text-black dark:text-white mt-28">My Ratings ({reviews.length})</h2>
+    <h2 className="text-3xl md:text-4xl  font-bold text-center text-black dark:text-white mt-28 mb-16">My Ratings ({reviews.length})</h2>
 
     {reviews.length === 0 ? (
       <NoRatings />

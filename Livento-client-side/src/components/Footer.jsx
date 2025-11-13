@@ -1,8 +1,9 @@
 import React from 'react';
 import imgLogo from "../assets/liventologo.png";
-import { FaFacebook, FaGithub, FaLinkedinIn } from 'react-icons/fa';
+import { FaFacebook, FaGithub, FaLinkedinIn, FaTwitter } from 'react-icons/fa';
 import { MdEmail } from 'react-icons/md';
 import { NavLink } from 'react-router';
+import { FaXTwitter } from 'react-icons/fa6';
 
 const Footer = () => {
   return (
@@ -52,6 +53,9 @@ const Footer = () => {
             </a>
             <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="hover:scale-110 transition-transform duration-200">
               <FaLinkedinIn size={20} />
+            </a>
+            <a href="mailto:your-email@example.com" className="hover:scale-110 transition-transform duration-200">
+              <FaXTwitter size={22} />
             </a>
             <a href="mailto:your-email@example.com" className="hover:scale-110 transition-transform duration-200">
               <MdEmail size={22} />

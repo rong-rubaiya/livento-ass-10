@@ -1,37 +1,90 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useLoaderData } from "react-router";
 import { motion } from "framer-motion";
-import { FaStar } from "react-icons/fa";
+import { FaStar, FaSearch } from "react-icons/fa";
 import bgphoto from "../assets/my-proper-bg.jpg";
 
 const Properties = () => {
-  const properties = useLoaderData();
-  // console.log(properties);
+  const loaderData = useLoaderData();
+  const [properties, SetProperties] = useState(loaderData || []);
+
+  // Search handler
+  const handleSearch = (e) => {
+    e.preventDefault();
+    const search_text = e.target.search.value.trim();
+    if (!search_text) return;
+
+    fetch(`http://localhost:5000/search?search=${search_text}`)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        SetProperties(data);
+      })
+      .catch((err) => console.error(err));
+  };
 
   return (
     <div className="min-h-screen p-8 relative flex flex-col items-center">
-      <title>All-properties</title>
+      <title>All Properties</title>
+
       {/* Background Image */}
       <div
-        className="absolute inset-0  bg-center z-0"
+        className="absolute inset-0 bg-center bg-cover z-0"
         style={{ backgroundImage: `url(${bgphoto})` }}
       />
+
       {/* Overlay */}
       <div className="absolute inset-0 bg-gray-200/60 dark:bg-black/60 backdrop-blur-sm z-0" />
 
       {/* Content */}
       <div className="relative z-10 w-full max-w-7xl flex flex-col items-center">
-        <h2 className="text-3xl font-bold text-black dark:text-white   text-center my-20">
+        <h2 className="text-4xl font-bold text-black dark:text-white text-center mt-24 mb-20">
           Available Properties ({properties.length})
         </h2>
 
+        {/* Sort & Search */}
+        <div className="flex flex-col sm:flex-row justify-between items-center w-full gap-3 p-4 rounded-2xl mb-8">
+          {/* Sort Dropdown */}
+          <div className="flex items-center gap-2">
+            <label className="text-sm sm:text-xl text-black dark:text-[#EC6325] font-bold">
+              Sort by:
+            </label>
+            <select className="px-3 py-2 rounded-xl border-2 border-[#EC6325] bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-[#EC6325]">
+              <option>Posted Date</option>
+              <option>Price (Low → High)</option>
+              <option>Price (High → Low)</option>
+            </select>
+          </div>
+
+          {/* Search Input */}
+          <form
+            onSubmit={handleSearch}
+            className="relative w-full sm:w-72 mt-3 sm:mt-0"
+          >
+            <FaSearch className="absolute left-3 top-3 text-[#EC6325]" size={16} />
+            <input
+              name="search"
+              type="text"
+              placeholder="Search properties..."
+              className="w-full pl-10 pr-4 py-2 rounded-xl border-2 border-[#EC6325] bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#EC6325]"
+            />
+            <button
+              type="submit"
+              className="absolute right-1 top-1/2 -translate-y-1/2 px-3 py-1 bg-[#EC6325] text-white rounded-lg text-sm"
+            >
+              Search
+            </button>
+          </form>
+        </div>
+
+        {/* Property Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full">
-          {properties.map((property, index) => (
+          {properties.map((property) => (
             <motion.div
-              key={index}
+              key={property._id}
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, delay: index * 0.1 }}
+              transition={{ duration: 0.3 }}
               className="bg-white rounded-2xl shadow-xl overflow-hidden transform transition-all duration-300 hover:shadow-2xl"
             >
               {/* Image wrapper */}
@@ -67,7 +120,7 @@ const Properties = () => {
                   {property.propertyName}
                 </h3>
                 <h3 className="text-sm font-semibold mb-2">
-                  Posted by: {property.postedBy.name}
+                  Posted by: {property.postedBy?.name || "Unknown"}
                 </h3>
                 <p className="text-gray-600 text-sm mb-3">{property.description}</p>
 

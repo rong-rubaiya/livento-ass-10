@@ -1,20 +1,37 @@
 import React, { useState } from "react";
 import { FaStar } from "react-icons/fa";
+import Swal from "sweetalert2"; // Import SweetAlert2
 
 const RatingInput = ({ onSubmit }) => {
   const [starRating, setStarRating] = useState(0);
   const [reviewText, setReviewText] = useState("");
 
   const handleSubmit = () => {
-    if (!starRating || !reviewText) return;
+    if (!starRating) {
+      Swal.fire({
+        icon: "warning",
+        title: "Oops!",
+        text: "Please give a star rating before submitting!",
+      });
+      return;
+    }
+
+    if (!reviewText.trim()) {
+      Swal.fire({
+        icon: "warning",
+        title: "Oops!",
+        text: "Please write your review before submitting!",
+      });
+      return;
+    }
+
     onSubmit({ starRating, reviewText });
     setStarRating(0);
     setReviewText("");
-    
   };
 
   return (
-    <div className="bg-white dark:text-black p-4 rounded-3xl shadow-md ">
+    <div className="bg-white dark:text-black p-4 rounded-3xl shadow-md">
       <h3 className="text-lg font-semibold mb-2">Add Your Review</h3>
 
       {/* Star Rating */}
@@ -41,13 +58,8 @@ const RatingInput = ({ onSubmit }) => {
       ></textarea>
 
       {/* Submit Button */}
-      <button
-        onClick={handleSubmit}
-        className="slice"
-      >
-        <span className="text">
-          Submit
-        </span>
+      <button onClick={handleSubmit} className="slice mt-3">
+        <span className="text">Submit</span>
       </button>
     </div>
   );

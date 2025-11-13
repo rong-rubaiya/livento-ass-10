@@ -114,7 +114,7 @@ const AddProperties = () => {
             placeholder="Property Name"
             value={propertyData.name}
             onChange={handleChange}
-            className="w-full p-4 rounded-xl border-2 border-black focus:ring-2 focus:ring-[#EC6325]"
+            className="w-full p-4 rounded-xl border-2 border-black focus:ring-2 focus:ring-[#EC6325] text-black  "
           />
           <input
             required
@@ -123,7 +123,7 @@ const AddProperties = () => {
             placeholder="Image URL"
             value={propertyData.imgURL}
             onChange={handleChange}
-            className="w-full p-4 rounded-xl border-2 border-black focus:ring-2 focus:ring-[#EC6325]"
+            className="w-full p-4 rounded-xl border-2 border-black focus:ring-2 focus:ring-[#EC6325] text-black "
           />
           <textarea
             required
@@ -132,7 +132,7 @@ const AddProperties = () => {
             rows={4}
             value={propertyData.description}
             onChange={handleChange}
-            className="w-full p-4 rounded-xl border-2 border-black focus:ring-2 focus:ring-[#EC6325]"
+            className="w-full p-4 rounded-xl border-2 border-black focus:ring-2 focus:ring-[#EC6325] text-black "
           />
           <input
             required
@@ -141,7 +141,7 @@ const AddProperties = () => {
             placeholder="Price"
             value={propertyData.price}
             onChange={handleChange}
-            className="w-full p-4 rounded-xl border-2 border-black focus:ring-2 focus:ring-[#EC6325]"
+            className="w-full p-4 rounded-xl border-2 border-black focus:ring-2 focus:ring-[#EC6325] text-black "
           />
           <input
             required
@@ -150,7 +150,7 @@ const AddProperties = () => {
             placeholder="Location"
             value={propertyData.location}
             onChange={handleChange}
-            className="w-full p-4 rounded-xl border-2 border-black focus:ring-2 focus:ring-[#EC6325]"
+            className="w-full p-4 rounded-xl border-2 border-black focus:ring-2 focus:ring-[#EC6325] text-black "
           />
           <select
             required
