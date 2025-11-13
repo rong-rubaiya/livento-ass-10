@@ -14,7 +14,7 @@ const Properties = () => {
     const search_text = e.target.search.value.trim(' ');
     if (!search_text) return;
 
-    fetch(`http://localhost:5000/search?search=${search_text}`)
+    fetch(`https://livento-server.vercel.app/search?search=${search_text}`)
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
@@ -28,7 +28,7 @@ const Properties = () => {
     const text=e.target.value
     console.log(text);
     if(text==="low"){
-      fetch('http://localhost:5000/propertis/low-high')
+      fetch('https://livento-server.vercel.app/propertis/low-high')
     .then((res)=>res.json())
     .then((data)=>{
       console.log(data);
@@ -38,14 +38,14 @@ const Properties = () => {
     }
 
     if(text==='high'){
-      fetch("http://localhost:5000/propertis/high-low")
+      fetch("https://livento-server.vercel.app/high-low")
       .then((res) => res.json())
       .then((data) => SetProperties(data))
       .catch((err) => console.error(err));
     }
 
     if (text === "all") {
-    fetch("http://localhost:5000/propertis")
+    fetch("https://livento-server.vercel.app/propertis")
       .then((res) => res.json())
       .then((data) => SetProperties(data))
       .catch((err) => console.error(err));

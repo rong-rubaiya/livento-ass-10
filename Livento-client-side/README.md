@@ -1,16 +1,70 @@
-# React + Vite
+# **Livento - Real Estate Listing Platform**
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Livento** is a dynamic real estate platform where property owners can list their available rentals or sale properties, and users can browse, search, and filter properties based on location, price, and type.
 
-Currently, two official plugins are available:
+## **Live Site**
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+🔗 [Visit the Live Site](YOUR_LIVE_SITE_URL_HERE)
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## **Features**
 
-## Expanding the ESLint configuration
+- **User Authentication**
+  - Login/Signup with email or Google
+  - Conditional rendering of user info (photo, name, email, logout)
+  - Protected routes for private user data
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **Property Listings**
+  - Add, update, view, and delete properties
+  - Property cards with name, category, price, and location
+  - View detailed property info with images and description
+
+- **Ratings & Reviews**
+  - Rate properties (1-5 stars)
+  - Write short reviews for properties
+
+- **Search & Sort**
+  - Search properties by name
+  - Sort properties by price or posted date
+  
+- **Responsive Design**
+  - Fully responsive for desktop, tablet, and mobile devices
+  
+- **Dark/Light Mode**
+  - Toggle between light and dark themes for personalized experience
+  
+- **404 Page**
+  - Custom 404 page for invalid routes
+
+- **Toast/SweetAlert Integration**
+  - Error and success messages are shown using toast notifications
+
+---
+
+## **Technologies Used**
+
+### **Frontend**
+- **React.js**: A JavaScript library for building the user interface.
+- **CSS/SCSS**: For styling the application.
+- **React Router**: For handling navigation and routing.
+- **Firebase Authentication**: For secure user authentication.
+- **SweetAlert**: For displaying alert messages.
+- **React Hooks**: For managing state and side effects in functional components.
+- **Firebase Firestore**: For managing property data and user profiles.
+
+### **Backend**
+- **Node.js**: JavaScript runtime for the backend.
+- **Express.js**: Framework for building the API.
+- **MongoDB**: Database for storing property listings.
+- **Firebase Admin SDK**: For managing user authentication on the server side.
+
+---
+
+## **Installation & Setup**
+
+### **Client-Side**
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/livento-client.git
