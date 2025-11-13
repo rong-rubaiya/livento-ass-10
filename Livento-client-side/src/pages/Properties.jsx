@@ -11,7 +11,7 @@ const Properties = () => {
   // Search handler
   const handleSearch = (e) => {
     e.preventDefault();
-    const search_text = e.target.search.value.trim();
+    const search_text = e.target.search.value.trim(' ');
     if (!search_text) return;
 
     fetch(`http://localhost:5000/search?search=${search_text}`)
@@ -22,6 +22,36 @@ const Properties = () => {
       })
       .catch((err) => console.error(err));
   };
+
+  const handleSort=(e)=>{
+    
+    const text=e.target.value
+    console.log(text);
+    if(text==="low"){
+      fetch('http://localhost:5000/propertis/low-high')
+    .then((res)=>res.json())
+    .then((data)=>{
+      console.log(data);
+      SetProperties(data)
+    })
+    .catch((err)=>console.log(err))
+    }
+
+    if(text==='high'){
+      fetch("http://localhost:5000/propertis/high-low")
+      .then((res) => res.json())
+      .then((data) => SetProperties(data))
+      .catch((err) => console.error(err));
+    }
+
+    if (text === "all") {
+    fetch("http://localhost:5000/propertis")
+      .then((res) => res.json())
+      .then((data) => SetProperties(data))
+      .catch((err) => console.error(err));
+  }
+    
+  }
 
   return (
     <div className="min-h-screen p-8 relative flex flex-col items-center">
@@ -49,10 +79,14 @@ const Properties = () => {
             <label className="text-sm sm:text-xl text-black dark:text-[#EC6325] font-bold">
               Sort by:
             </label>
-            <select className="px-3 py-2 rounded-xl border-2 border-[#EC6325] bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-[#EC6325]">
-              <option>Posted Date</option>
-              <option>Price (Low → High)</option>
-              <option>Price (High → Low)</option>
+            <select 
+            
+            name='sort'
+            onChange={handleSort}
+            className="px-3 py-2 rounded-xl border-2 border-[#EC6325] bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-[#EC6325]">
+              <option value="all">All properties</option>
+              <option value="low">Price (Low → High)</option>
+              <option value="high">Price (High → Low)</option>
             </select>
           </div>
 
@@ -70,7 +104,7 @@ const Properties = () => {
             />
             <button
               type="submit"
-              className="absolute right-1 top-1/2 -translate-y-1/2 px-3 py-1 bg-[#EC6325] text-white rounded-lg text-sm"
+              className="absolute cursor-pointer right-1 top-1/2 -translate-y-1/2 px-3 py-1 bg-[#EC6325] text-white rounded-lg text-sm"
             >
               Search
             </button>
@@ -119,7 +153,7 @@ const Properties = () => {
                 <h3 className="text-xl text-[#EC6325] font-semibold mb-2">
                   {property.propertyName}
                 </h3>
-                <h3 className="text-sm font-semibold mb-2">
+                <h3 className="text-sm font-semibold mb-2 dark:text-black">
                   Posted by: {property.postedBy?.name || "Unknown"}
                 </h3>
                 <p className="text-gray-600 text-sm mb-3">{property.description}</p>
