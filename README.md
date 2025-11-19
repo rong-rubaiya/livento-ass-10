@@ -2,6 +2,9 @@
 
 **Livento** is a dynamic real estate platform where property owners can list their available rentals or sale properties, and users can browse, search, and filter properties based on location, price, and type.
 
+![Livento Website Screenshot](https://raw.githubusercontent.com/rong-rubaiya/livento/refs/heads/main/Screenshot%202025-11-19%20163256.png)
+
+
 ## **Live Site**
 
 🔗 [Visit the Live Site](https://livento-ass-10.web.app/)
